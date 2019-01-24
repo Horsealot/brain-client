@@ -1,0 +1,70 @@
+label {
+  color: white;
+}
+
+.floating-form {
+  position: relative;
+  padding-top: 18px;
+  label {
+    color: #aaa;
+    font-size: 18px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transition: all ease 0.3s;
+    &.is-focused {
+      color: #fff;
+      font-size: 12px;
+      top: -18px;
+    }
+  }
+  .form-control {
+    z-index: 1;
+    position: relative;
+  }
+}
+
+.form {
+  &-group {
+    .help-block {
+      text-align: right;
+      position: absolute;
+      width: 100%;
+      color: #990000;
+      font-size: 13px;
+      bottom: -1.2rem;
+    }
+  }
+  &-control {
+    color: white;
+    background: none;
+    border: none;
+    border-bottom: solid 2px #ced4da;
+    border-radius: 2px;
+    padding: .375rem .5rem;
+    &:focus {
+      color: white;
+      background: none;
+      outline: 0;
+      border-color: #ced4da;
+      box-shadow: none;
+    }
+  }
+}
+
+.btn {
+  &-secondary {
+    background: none;
+    border-width: 2px;
+    border-color: white;
+    padding: 6px 30px;
+    border-radius: 10px;
+    transition: box-shadow ease 0.6s;
+    &:hover {
+      background: none;
+      border-color: white;
+      box-shadow: 0 0 5px white;
+    }
+  }
+}

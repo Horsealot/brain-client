@@ -1,0 +1,17 @@
+.login-page {
+  background: black;
+  height: 100vh;
+  &__logo {
+    max-width: 100px;
+  }
+  &__container {
+    max-width: 450px;
+    padding: 40px;
+    background: #111111;
+    border-radius: 30px;
+    box-shadow: 0 0 15px #111111;
+  }
+  &__form {
+    padding: 20px 0 50px 0;
+  }
+}

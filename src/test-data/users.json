@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "username": "Thomas",
+    "firstname": "Thomas",
+    "lastname": "Des",
+    "profile": "https://via.placeholder.com/150"
+  },
+  {
+    "id": "2",
+    "username": "Alexandra",
+    "firstname": "Alexandra",
+    "lastname": "Des",
+    "profile": "https://via.placeholder.com/150"
+  },
+  {
+    "id": "3",
+    "username": "Justine",
+    "firstname": "Justine",
+    "lastname": "Des",
+    "profile": "https://via.placeholder.com/150"
+  }
+]

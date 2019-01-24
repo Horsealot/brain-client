@@ -1,0 +1,117 @@
+.flex {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -o-flex;
+  display: flex;
+
+  &.flex--column {
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+  }
+
+  &,
+  &.flex--start-stretch {
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+  }
+
+  &.flex--start,
+  &.flex--start-start,
+  &.flex--start-center,
+  &.flex--start-end,
+  &.flex--start-stretch {
+    justify-content: flex-start;
+  }
+
+  &.flex--center,
+  &.flex--center-start,
+  &.flex--center-center,
+  &.flex--center-end,
+  &.flex--center-stretch {
+    justify-content: center;
+  }
+
+  &.flex--end,
+  &.flex--end-start,
+  &.flex--end-center,
+  &.flex--end-end,
+  &.flex--end-stretch {
+    justify-content: flex-end;
+  }
+
+  &.flex--space-around,
+  &.flex--space-around-center,
+  &.flex--space-around-start,
+  &.flex--space-around-end,
+  &.flex--space-around-stretch {
+    justify-content: space-around;
+  }
+
+  &.flex--space-between,
+  &.flex--space-between-center,
+  &.flex--space-between-start,
+  &.flex--space-between-end,
+  &.flex--space-between-stretch {
+    justify-content: space-between;
+  }
+
+  &.flex--start-start,
+  &.flex--center-start,
+  &.flex--end-start,
+  &.flex--space-between-start,
+  &.flex--space-around-start {
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+
+  &.flex--start-center,
+  &.flex--center-center,
+  &.flex--end-center,
+  &.flex--space-between-center,
+  &.flex--space-around-center {
+    align-items: center;
+    align-content: center;
+  }
+
+  &.flex--start-center > *,
+  &.flex--center-center > *,
+  &.flex--end-center > *,
+  &.flex--space-between-center > *,
+  &.flex--space-around-center > * {
+    box-sizing: border-box;
+  }
+
+  &.flex--start-end,
+  &.flex--center-end,
+  &.flex--end-end,
+  &.flex--space-between-end,
+  &.flex--space-around-end {
+    align-items: flex-end;
+    align-content: flex-end;
+  }
+
+  &.flex--start-stretch,
+  &.flex--center-stretch,
+  &.flex--end-stretch,
+  &.flex--space-between-stretch,
+  &.flex--space-around-stretch {
+    align-items: stretch;
+    align-content: stretch;
+  }
+  &.flex--wrap {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  &--no-grow {
+    flex-grow: 0 !important;
+  }
+  &--grow {
+    flex-grow: 1;
+  }
+}

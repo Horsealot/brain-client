@@ -1,0 +1,41 @@
+$menu-width: 100px;
+
+.aside-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: $menu-width;
+  box-shadow: 0 0 10px #888888;
+  padding-top: 20px;
+  &__element {
+    font-size: 11px;
+    width: 100%;
+    padding: 10px 5px;
+    color: black;
+    text-decoration: none;
+    border: solid 1px transparent;
+    text-align: center;
+    i {
+      font-size: 25px;
+      margin-bottom: 5px;
+    }
+    &:hover, &:active, &:visited {
+      color: black;
+      text-decoration: none;
+    }
+    &:hover {
+      border-top: solid 1px blue;
+      border-bottom: solid 1px blue;
+    }
+  }
+}
+
+.aside-profile {
+
+}
+
+.main-container {
+  margin-left: $menu-width;
+  margin-top: 50px;
+}
