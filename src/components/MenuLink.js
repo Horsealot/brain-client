@@ -2,27 +2,26 @@ import React, { Component } from 'react';
 
 import '../_styles/Layout.scss';
 import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
 
 class MenuLink extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        const {pathname} = this.props.location;
+        const { targetUrl, image, icon, caption } = this.props;
         return (
-            <Link to={ this.props.targetUrl } className="aside-menu__element flex flex--center-center flex--column">
+            <Link to={ targetUrl } className={'aside-menu__element flex flex--center-center flex--column' + (pathname === targetUrl ? ' active' : '') } >
                 {
-                    this.props.image && (<img src={ this.props.image }/>)
+                    image && (<img src={ image } alt={caption} />)
                 }
                 {
-                    this.props.icon && (<i className={this.props.icon} />)
+                    icon && (<i className={ icon } />)
                 }
                 <div className="aside-menu__element__title">
-                    { this.props.caption }
+                    { caption }
                 </div>
             </Link>
         );
     }
 }
 
-export default MenuLink;
+export default withRouter(MenuLink);

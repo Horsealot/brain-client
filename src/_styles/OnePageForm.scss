@@ -1,0 +1,43 @@
+.one-page-form {
+  background: $black;
+  height: 100vh;
+  &__logo {
+    max-width: 100px;
+    &-brain {
+      position: absolute;
+    }
+    &-bg {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  &__container {
+    max-width: 450px;
+    padding: 40px;
+    background: $light-black;
+    border-radius: 30px;
+    box-shadow: 0 0 15px $light-black;
+  }
+  &__form {
+    padding: 20px 0 50px 0;
+  }
+  &__error {
+    height: 0;
+    color: red;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 5px;
+  }
+  &__sub-action {
+    color: #666;
+    font-size: 12px;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

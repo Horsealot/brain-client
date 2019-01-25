@@ -1,3 +1,5 @@
+@import './_constants/constants';
+
 $menu-width: 100px;
 
 .aside-menu {
@@ -6,16 +8,20 @@ $menu-width: 100px;
   top: 0;
   height: 100%;
   width: $menu-width;
-  box-shadow: 0 0 10px #888888;
+  box-shadow: 0 0 10px $light-black;
+  background: $light-black;
   padding-top: 20px;
   &__element {
+    position: relative;
     font-size: 11px;
     width: 100%;
     padding: 10px 5px;
     color: black;
     text-decoration: none;
-    border: solid 1px transparent;
     text-align: center;
+    & + & {
+      border-top: solid 1px $lighter-black;
+    }
     i {
       font-size: 25px;
       margin-bottom: 5px;
@@ -24,9 +30,17 @@ $menu-width: 100px;
       color: black;
       text-decoration: none;
     }
-    &:hover {
-      border-top: solid 1px blue;
-      border-bottom: solid 1px blue;
+    &:hover, &.active {
+      background: $lighter-black;
+      &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background-color: $primary;
+      }
     }
   }
 }

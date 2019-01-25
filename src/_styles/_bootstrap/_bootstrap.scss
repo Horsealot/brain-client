@@ -1,10 +1,14 @@
+h1, h2, h3, h4, h5, h6, a, a:hover, a:visited, a:active {
+  color: white;
+}
+
 label {
   color: white;
 }
 
 .floating-form {
   position: relative;
-  padding-top: 18px;
+  //padding-top: 18px;
   label {
     color: #aaa;
     font-size: 18px;
@@ -16,12 +20,15 @@ label {
     &.is-focused {
       color: #fff;
       font-size: 12px;
-      top: -18px;
+      top: -9px;
     }
   }
   .form-control {
     z-index: 1;
     position: relative;
+  }
+  & + & {
+    margin-top: 36px;
   }
 }
 
@@ -65,6 +72,28 @@ label {
       background: none;
       border-color: white;
       box-shadow: 0 0 5px white;
+    }
+  }
+}
+
+.table {
+  thead {
+    tr {
+      background: $light-black;
+      th {
+        border: none;
+        border-bottom: 2px solid $primary;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        border: none;
+      }
+      &:nth-child(2n+2) {
+        background: $dark-primary;
+      }
     }
   }
 }

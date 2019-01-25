@@ -1,0 +1,12 @@
+{
+  "USERS_LOGIN_FAILURE": "Login failed",
+  "USERS_SIGNUP_FAILURE": "Invalid link, please ask an admin to invite you",
+  "PASSWORD_REQUEST": {
+    "UNKNOWN": "Unknown email",
+    "EXISTING": "A request has already been made, please check your mails"
+  },
+  "PASSWORD_RESET": {
+    "EXPIRED": "The link is expired, please request a new one",
+    "UNKNOWN": "Invalid link, please request a new one"
+  }
+}

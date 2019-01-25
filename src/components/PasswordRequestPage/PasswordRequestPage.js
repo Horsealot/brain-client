@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import {Button, Col, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Form, FormGroup} from 'reactstrap';
 import config from "../../config";
+import FloatingLabelInput from "../FloatingLabelInput";
+import userMessages from './../../_constants/userMessages.constants';
+import OnePageForm from "./../OnePageForm";
 
 class PasswordRequestPage extends React.Component {
     constructor(props) {
@@ -45,20 +48,16 @@ class PasswordRequestPage extends React.Component {
 
         return fetch(`${config.apiUrl}/reset/request`, requestOptions)
             .then((response) => {
-                this.setState({ sent: true });
                 return response.text().then((text) => {
-                    const data = text && JSON.parse(text);
                     if (!response.ok) {
-                        if (response.status === 401) {
-                            // auto logout if 401 response returned from api
-                            // location.reload(true);
+                        if (response.status === 409) {
+                            this.setState({errorMessage: userMessages.PASSWORD_REQUEST.EXISTING});
+                        } else {
+                            this.setState({errorMessage: userMessages.PASSWORD_REQUEST.UNKNOWN});
                         }
-
-                        const error = (data && data.message) || response.statusText;
-                        return Promise.reject(error);
+                        return;
                     }
-
-                    return data;
+                    this.setState({ sent: true });
                 });
             })
     }
@@ -66,35 +65,46 @@ class PasswordRequestPage extends React.Component {
 
 
     render() {
-        const { sending } = this.props;
         const { email, submitted, sent } = this.state;
         return (
-
-            <Container className="col-md-6 col-md-offset-3">
-                <h2>Request a new password</h2>
+            <OnePageForm>
                 {
                     sent ?
-                        (
+                    (
+                        <Form name="form" onSubmit={this.handleSubmit}>
+                            <div className="one-page-form__form">
+                                <h3 className='text-center'>Reset your password</h3>
+                            </div>
                             <Link to='/login'>Request sent</Link>
-                        )
-                        :
-                        (<Form name="form" onSubmit={this.handleSubmit}>
-                            <FormGroup className={(submitted && !email ? ' has-error' : '')}>
-                                <label htmlFor="username">Email</label>
-                                <Input type="text" name="email" value={email} onChange={this.handleChange} />
-                                {submitted && !email &&
-                                <div className="help-block">Email is required</div>
-                                }
-                            </FormGroup>
-                            <FormGroup>
-                                <Button className="btn btn-primary">Request</Button>
-                                {sending &&
-                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                }
-                            </FormGroup>
-                        </Form>)
+                        </Form>
+                    )
+                    :
+                    (
+                        <Form name="form" onSubmit={this.handleSubmit}>
+                            <div>
+                                <div className="one-page-form__form">
+                                    <h3 className='text-center'>Reset your password</h3>
+                                    <FloatingLabelInput
+                                        type="text"
+                                        label="Email"
+                                        formClass={(submitted && !email ? 'has-error' : '')}
+                                        extrablock={
+                                            (submitted && !email) ?
+                                                (<div className="help-block">Email is required</div>) : undefined
+                                        }
+                                        name="email" value={email}
+                                        onChange={this.handleChange}/>
+                                    <div className='one-page-form__error'>{this.state.errorMessage}</div>
+                                </div>
+                                <FormGroup className='text-center'>
+                                    <Button className="btn">Reset</Button>
+                                </FormGroup>
+                            </div>
+                        </Form>
+                    )
                 }
-            </Container>
+            </OnePageForm>
+
         );
     }
 }

@@ -1,21 +1,7 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from './actions/actionCreator';
-
 import Main from './components/Main';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-function mapStateToProps(state) {
-    return {
-        loggedUser: state.loggedUser,
-        users: state.users,
-        comments: state.comments
-    };
-}
+library.add(faTrashAlt);
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
-
-const App = connect(mapStateToProps, mapDispatchToProps)(Main);
-
-export default App;
+export default Main;

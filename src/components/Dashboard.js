@@ -6,7 +6,7 @@ class Dashboard extends Component {
         super(props);
 
         this.state = {
-            user: JSON.parse(localStorage.getItem('user')).user
+            user: JSON.parse(localStorage.getItem('user'))
         };
     }
 

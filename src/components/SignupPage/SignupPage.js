@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {bindActionCreators} from "redux";
-import { login, logout } from "../../actions/user.actions";
+import { bindActionCreators } from "redux";
+import { signup, logout } from "../../actions/user.actions";
 
 import {Button, Form, FormGroup} from 'reactstrap';
 
@@ -12,7 +12,7 @@ import {Link} from "react-router-dom";
 import OnePageForm from "./../OnePageForm";
 import userMessages from './../../_constants/userMessages.constants';
 
-class LoginPage extends React.Component {
+class SignupPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,7 +20,8 @@ class LoginPage extends React.Component {
         this.props.logout();
 
         this.state = {
-            email: '',
+            firstname: '',
+            lastname: '',
             password: '',
             submitted: false,
             loggingIn: true
@@ -39,27 +40,38 @@ class LoginPage extends React.Component {
         e.preventDefault();
 
         this.setState({ submitted: true, loggingIn: true });
-        const { email, password } = this.state;
-        if (email && password) {
-            this.props.login(email, password);
+        const { firstname, lastname, password } = this.state;
+        const { token } = this.props.match.params;
+        if (firstname && lastname && password) {
+            this.props.signup(token, password, firstname, lastname);
         }
     }
 
     render() {
-        const { email, password, submitted } = this.state;
+        const { firstname, lastname, password, submitted } = this.state;
         return (
             <OnePageForm>
                 <Form name="form" onSubmit={this.handleSubmit}>
                     <div className="one-page-form__form">
                         <FloatingLabelInput
                             type="text"
-                            label="Email"
-                            formClass={(submitted && !email ? 'has-error' : '')}
+                            label="Firstname"
+                            formClass={(submitted && !firstname ? 'has-error' : '')}
                             extrablock={
-                                (submitted && !email) ?
-                                (<div className="help-block">Email is required</div>) : undefined
+                                (submitted && !firstname) ?
+                                    (<div className="help-block">Firstname is required</div>) : undefined
                             }
-                            name="email" value={email}
+                            name="firstname" value={firstname}
+                            onChange={this.handleChange}/>
+                        <FloatingLabelInput
+                            type="text"
+                            label="Lastname"
+                            formClass={(submitted && !lastname ? 'has-error' : '')}
+                            extrablock={
+                                (submitted && !lastname) ?
+                                    (<div className="help-block">Lastname is required</div>) : undefined
+                            }
+                            name="lastname" value={lastname}
                             onChange={this.handleChange}/>
                         <FloatingLabelInput
                             type="password"
@@ -67,24 +79,12 @@ class LoginPage extends React.Component {
                             formClass={(submitted && !password ? 'has-error' : '')}
                             extrablock={
                                 (submitted && !password) ?
-                                (<div className="help-block">Password is required</div>) : undefined
+                                    (<div className="help-block">Password is required</div>) : undefined
                             }
                             name="password" value={password}
                             onChange={this.handleChange}/>
                         <div className='one-page-form__error'>{userMessages[this.props.authentication.error]}</div>
                     </div>
-                    {/*<FormGroup className={(submitted && !email ? ' has-error' : '')}>*/}
-                        {/*<label htmlFor="email">Email</label>*/}
-                        {/*<Input type="text" name="email" value={email} onChange={this.handleChange} />*/}
-
-                    {/*</FormGroup>*/}
-                    {/*<FormGroup className={(submitted && !password ? ' has-error' : '')}>*/}
-                        {/*<label htmlFor="password">Password</label>*/}
-                        {/*<Input type="password" name="password" value={password} onChange={this.handleChange} />*/}
-                        {/*{submitted && !password &&*/}
-                        {/*<div className="help-block">Password is required</div>*/}
-                        {/*}*/}
-                    {/*</FormGroup>*/}
                     <FormGroup className='text-center'>
                         <Button className="btn">Login</Button>
                         <div>
@@ -107,8 +107,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ login, logout }, dispatch);
+    return bindActionCreators({ signup, logout }, dispatch);
 }
 
-const connectedLoginPage = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
-export { connectedLoginPage as LoginPage };
+const connectedSignupPage = connect(mapStateToProps, mapDispatchToProps)(SignupPage);
+export { connectedSignupPage as SignupPage };
