@@ -8,7 +8,7 @@ $menu-width: 100px;
   top: 0;
   height: 100%;
   width: $menu-width;
-  box-shadow: 0 0 10px $light-black;
+  @include box-shadow(0 0 10px $light-black);
   background: $light-black;
   padding-top: 20px;
   &__element {

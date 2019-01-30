@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import '../_styles/Layout.scss';
 import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
 

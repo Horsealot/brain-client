@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Router } from "react-router-dom";
 import { Route } from "react-router";
-import Profile from "./Profile";
+import Profile from "./components/Profile";
 
-import { history } from './../store';
-import {LoginPage} from "./LoginPage/LoginPage";
-import {SignupPage} from "./SignupPage/SignupPage";
-import PasswordRequestPage from "./PasswordRequestPage/PasswordRequestPage";
-import PasswordResetPage from "./PasswordResetPage/PasswordResetPage";
-import Dashboard from "./Dashboard";
-import {PrivateLayoutRoute} from "./PrivateLayouteRoute";
-import Members from "./Members";
-import ProfileEdition from "./ProfileEdition";
-import Squads from "./Squads";
+import { history } from './store';
+import {LoginPage} from "./components/LoginPage/LoginPage";
+import {SignupPage} from "./components/SignupPage/SignupPage";
+import PasswordRequestPage from "./components/PasswordRequestPage/PasswordRequestPage";
+import PasswordResetPage from "./components/PasswordResetPage/PasswordResetPage";
+import Dashboard from "./components/Dashboard";
+import {PrivateLayoutRoute} from "./components/PrivateLayoutRoute";
+import Members from "./components/Members";
+import ProfileEdition from "./components/ProfileEdition";
+import Squads from "./components/Squads";
 
 class Main extends Component {
   render() {
@@ -22,7 +22,7 @@ class Main extends Component {
                 <PrivateLayoutRoute path="/" exact component={Dashboard}/>
                 <PrivateLayoutRoute exact path="/profile/:id" component={Profile} />
                 <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} />
-                <PrivateLayoutRoute path="/members" component={Members} />
+                <PrivateLayoutRoute path="/admin" component={Members} />
                 <PrivateLayoutRoute path="/squads" component={Squads} />
 
                 {/* Auth routes */}

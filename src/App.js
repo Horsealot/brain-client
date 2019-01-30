@@ -1,4 +1,4 @@
-import Main from './components/Main';
+import Main from './Main';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 

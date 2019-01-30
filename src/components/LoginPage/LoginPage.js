@@ -73,18 +73,6 @@ class LoginPage extends React.Component {
                             onChange={this.handleChange}/>
                         <div className='one-page-form__error'>{userMessages[this.props.authentication.error]}</div>
                     </div>
-                    {/*<FormGroup className={(submitted && !email ? ' has-error' : '')}>*/}
-                        {/*<label htmlFor="email">Email</label>*/}
-                        {/*<Input type="text" name="email" value={email} onChange={this.handleChange} />*/}
-
-                    {/*</FormGroup>*/}
-                    {/*<FormGroup className={(submitted && !password ? ' has-error' : '')}>*/}
-                        {/*<label htmlFor="password">Password</label>*/}
-                        {/*<Input type="password" name="password" value={password} onChange={this.handleChange} />*/}
-                        {/*{submitted && !password &&*/}
-                        {/*<div className="help-block">Password is required</div>*/}
-                        {/*}*/}
-                    {/*</FormGroup>*/}
                     <FormGroup className='text-center'>
                         <Button className="btn">Login</Button>
                         <div>

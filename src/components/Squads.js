@@ -5,6 +5,7 @@ import authHeader from "../_helpers/auth-header";
 import { userService } from './../_services/user.service';
 import SectionTitle from "./SectionTitle";
 import {Link} from "react-router-dom";
+import {getUserPicture} from "../_helpers/user-picture";
 
 class Squads extends Component {
     constructor(props) {
@@ -46,12 +47,7 @@ class Squads extends Component {
                 const squadMember = squads[squad][i];
                 squadMembers.push(
                     <Link to={`/profile/${squadMember._id}`} key={`${squad}.${squadMember._id}`} className='squads__members__member flex flex--column flex--center-center'>
-                        {
-                            squadMember.picture ?
-                                <img src={squadMember.picture} className='squads__members__member__picture'/>
-                                :
-                                <img src='/assets/images/default-profile.jpg' className='squads__members__member__picture'/>
-                        }
+                        <img src={getUserPicture(squadMember)} className='squads__members__member__picture'/>
                         <div className='squads__members__member__name'>{ squadMember.firstname }</div>
                     </Link>
                 );
