@@ -1,0 +1,38 @@
+.profile {
+  &__avatar {
+    border-radius: 50%;
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  &__edit {
+    margin-bottom: 10px;
+  }
+  &__name {
+    font-size: 2rem;
+  }
+  &__title {
+    font-size: 1.3rem;
+  }
+  &__description {
+    white-space: pre-wrap;
+  }
+  &__scorecard {
+    margin: 30px;
+    padding: 30px;
+    box-shadow: 0 0 10px $light-black;
+    background: $light-black;
+    border-radius: 20px;
+  }
+  &-edition {
+    background: $light-black;
+    border-radius: 30px;
+    box-shadow: 0 0 15px $light-black;
+    padding: 40px;
+    &__call-to-action {
+      padding: 0 10px;
+    }
+    &__block {
+      padding-bottom: 40px;
+    }
+  }
+}

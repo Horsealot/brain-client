@@ -1,0 +1,13 @@
+.react-phone-number-input {
+  &__input {
+    background: none;
+    color: $white;
+    border: none !important;
+  }
+  &__icon {
+    position: relative;
+    &-image {
+      position: absolute;
+    }
+  }
+}

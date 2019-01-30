@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import '../_styles/Layout.scss';
 import MenuLink from "./MenuLink";
 
 class Layout extends Component {
@@ -8,7 +7,7 @@ class Layout extends Component {
         super(props);
 
         this.state = {
-            user: JSON.parse(localStorage.getItem('user')).user
+            user: JSON.parse(localStorage.getItem('user'))
         };
     }
 

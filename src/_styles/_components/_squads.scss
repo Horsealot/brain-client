@@ -1,0 +1,22 @@
+.squads {
+  &__title {
+    font-size: 25px;
+    padding-bottom: 10px;
+  }
+  &__members {
+    &__member {
+      margin-right: 40px;
+      &__picture {
+        max-width: 100px;
+        border-radius: 50%;
+      }
+      &__name {
+        padding-top: 10px;
+        font-size: 16px;
+      }
+    }
+  }
+  & + & {
+    padding-top: 50px;
+  }
+}

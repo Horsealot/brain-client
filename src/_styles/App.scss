@@ -1,8 +1,11 @@
 @import './_mixins/mixins';
 @import './_constants/constants';
-@import './_bootstrap/bootstrap';
+@import './_libraries/libraries';
 @import './_fonts/brain-icon';
 
+@import './Layout';
+
+@import './_components/components';
 @import './OnePageForm';
 
 body {

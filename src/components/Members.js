@@ -11,18 +11,8 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/lib/animated';
 import { multiSelectStyle } from './../_styles/_select';
 import SectionTitle from "./SectionTitle";
-
-const squadOptions = [
-    { value: 'executive', label: 'Executive' },
-    { value: 'design', label: 'Design' },
-    { value: 'tech', label: 'Tech' },
-    { value: 'marketing', label: 'Marketing' }
-];
-
-const rolesOptions = [
-    { value: 'ADMIN', label: 'Admin' },
-    { value: 'USER', label: 'User' }
-];
+import SquadSelect from "./SquadSelect";
+import RoleSelect from "./RoleSelect";
 
 class Members extends Component {
     constructor(props) {
@@ -32,14 +22,11 @@ class Members extends Component {
             users: [],
             invitedEmail: '',
             invitedMessage: '',
-            submitted: false,
-            usersWaitingToUpdate: []
+            submitted: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.mapUserList = this.mapUserList.bind(this);
-        this.remapUserSquads = this.remapUserSquads.bind(this);
-        this.remapUserRoles = this.remapUserRoles.bind(this);
+        this.remapUser = this.remapUser.bind(this);
     }
 
     handleChange(e) {
@@ -69,50 +56,38 @@ class Members extends Component {
         }
     }
 
-    remapUserRoles(roles, index) {
+    remapUser(values, index, key) {
         const users = this.state.users.slice();
         if(users.length <= index) return;
 
-        users[index].roles = roles.map((selection) => {
-            return selection.value;
-        });
+        users[index][key] = values;
+        users[index].modified = true;
         this.setState({users});
-        if(this.state.usersWaitingToUpdate.indexOf(index) < 0) {
-            let usersWaitingToUpdateCopy = [...this.state.usersWaitingToUpdate];
-            usersWaitingToUpdateCopy.push(index);
-            this.setState({usersWaitingToUpdate: usersWaitingToUpdateCopy});
-            setTimeout(() => {
-                console.log("Update user " + index);
-                let array = [...this.state.usersWaitingToUpdate];
-                let indexToRemove = array.indexOf(index);
-                if (indexToRemove !== -1) {
-                    array.splice(indexToRemove, 1);
-                    this.setState({usersWaitingToUpdate: array});
-                }
-            }, 5000);
+    };
+
+    updateUser(index) {
+        if(this.state.users.length <= index || !this.state.users[index].modified) {
+            return;
         }
-    };
-
-    remapUserSquads(squads, index) {
-        const users = this.state.users.slice();
-        if(users.length <= index) return;
-
-        users[index].squads = squads.map((selection) => {
-            return selection.value;
-        });
-        this.setState({users});
-    };
-
-    mapUserList(userList, optionList) {
-        let userOptions = [];
-        userList.forEach((userOption) => {
-            optionList.forEach((option) => {
-                if(option.value === userOption) {
-                    userOptions.push(option);
+        const userToUpdate = this.state.users[index];
+        const requestOptions = {
+            method: 'POST',
+            headers: { ...authHeader(), 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user: {
+                    roles: userToUpdate.roles,
+                    squads: userToUpdate.squads
                 }
             })
-        });
-        return userOptions
+        };
+
+        return fetch(`${config.apiUrl}/users/${userToUpdate._id}`, requestOptions)
+            .then(userService.handleResponse)
+            .then((data) => {
+                const users = this.state.users.slice();
+                users[index].modified = false;
+                this.setState({users});
+            })
     }
 
     componentDidMount() {
@@ -124,7 +99,7 @@ class Members extends Component {
             return fetch(`${config.apiUrl}/users`, requestOptions)
                 .then(userService.handleResponse)
                 .then((data) => {
-                    this.setState({users: data.users, usersWaitingToUpdate: []});
+                    this.setState({users: data.users.map((user) => {return {...user, modified: false}}), usersWaitingToUpdate: []});
                 })
     }
 
@@ -150,26 +125,40 @@ class Members extends Component {
                                 <Link to={'/profile/' + user._id }>{ user.firstname } { user.lastname }</Link>
                             </td>
                             <td className='align-middle' style={{width: '30%'}}>
-                                <Select
-                                    closeMenuOnSelect={false}
-                                    components={makeAnimated()}
-                                    defaultValue={this.mapUserList(user.squads, squadOptions)}
-                                    isMulti
-                                    options={squadOptions}
-                                    styles={multiSelectStyle}
-                                    onChange={(e) => this.remapUserSquads(e, index)}
+                                <SquadSelect
+                                    selectKey={index}
+                                    value={user.squads}
+                                    onBlur={(index) => {this.updateUser(index)}}
+                                    onChange={(value, index) => {this.remapUser(value, index, 'squads')}}
                                 />
+                                {/*<Select*/}
+                                    {/*closeMenuOnSelect={false}*/}
+                                    {/*components={makeAnimated()}*/}
+                                    {/*defaultValue={this.mapUserList(user.squads, squadOptions)}*/}
+                                    {/*isMulti*/}
+                                    {/*options={squadOptions}*/}
+                                    {/*styles={multiSelectStyle}*/}
+                                    {/*onChange={(e) => this.remapUserSquads(e, index)}*/}
+                                    {/*onBlur={() => this.updateUser(index)}*/}
+                                {/*/>*/}
                             </td>
                             <td className='align-middle' style={{width: '30%'}}>
-                                <Select
-                                    closeMenuOnSelect={false}
-                                    components={makeAnimated()}
-                                    defaultValue={this.mapUserList(user.roles, rolesOptions)}
-                                    isMulti
-                                    options={rolesOptions}
-                                    styles={multiSelectStyle}
-                                    onChange={(e) => this.remapUserRoles(e, index)}
+                                <RoleSelect
+                                    selectKey={index}
+                                    value={user.roles}
+                                    onBlur={(index) => {this.updateUser(index)}}
+                                    onChange={(value, index) => {this.remapUser(value, index, 'roles')}}
                                 />
+                                {/*<Select*/}
+                                    {/*closeMenuOnSelect={false}*/}
+                                    {/*components={makeAnimated()}*/}
+                                    {/*defaultValue={this.mapUserList(user.roles, rolesOptions)}*/}
+                                    {/*isMulti*/}
+                                    {/*options={rolesOptions}*/}
+                                    {/*styles={multiSelectStyle}*/}
+                                    {/*onChange={(e) => this.remapUserRoles(e, index)}*/}
+                                    {/*onBlur={() => this.updateUser(index)}*/}
+                                {/*/>*/}
                             </td>
                             <td className='align-middle'></td>
                             <td className='align-middle'>

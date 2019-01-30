@@ -1,7 +1,8 @@
 import React from 'react';
 import {FormGroup, Input, Label} from "reactstrap";
+import TextareaAutosize from "react-textarea-autosize";
 
-class FloatingLabelInput extends React.Component {
+class FloatingTextareaInput extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,7 +17,7 @@ class FloatingLabelInput extends React.Component {
 
     handleFocus = () => this.setState({ isFocused: true });
     handleBlur = () => {
-        if(!this.state.value || !this.state.value.length) {
+        if(!this.state.value || !this.state.value.length) {
             this.setState({ isFocused: false });
         }
     }
@@ -38,16 +39,24 @@ class FloatingLabelInput extends React.Component {
                 <Label className={isFocused ? 'is-focused floating-form' : 'floating-form'}>
                     {label}
                 </Label>
-                <Input
+                <TextareaAutosize
                     {...props}
+                    className='form-control'
+                    type='textarea'
                     onChange={this.handleChange}
                     onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
-                />
+                    onBlur={this.handleBlur}/>
+                {/*<Input*/}
+                    {/*{...props}*/}
+                    {/*type='textarea'*/}
+                    {/*onChange={this.handleChange}*/}
+                    {/*onFocus={this.handleFocus}*/}
+                    {/*onBlur={this.handleBlur}*/}
+                {/*/>*/}
                 {extrablock}
             </FormGroup>
         );
     }
 }
 
-export default FloatingLabelInput;
+export default FloatingTextareaInput;

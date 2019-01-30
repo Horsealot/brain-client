@@ -1,0 +1,14 @@
+.notfound {
+  position: absolute;
+  top: 0;
+  left: $menu-width;
+  right: 0;
+  bottom: 0;
+  img {
+    max-width: 200px;
+  }
+  &__label {
+    font-size: 25px;
+    margin-top: 30px;
+  }
+}

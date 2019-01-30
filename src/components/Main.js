@@ -11,6 +11,8 @@ import PasswordResetPage from "./PasswordResetPage/PasswordResetPage";
 import Dashboard from "./Dashboard";
 import {PrivateLayoutRoute} from "./PrivateLayouteRoute";
 import Members from "./Members";
+import ProfileEdition from "./ProfileEdition";
+import Squads from "./Squads";
 
 class Main extends Component {
   render() {
@@ -18,9 +20,10 @@ class Main extends Component {
         <Router history={history}>
             <div className="sans-serif">
                 <PrivateLayoutRoute path="/" exact component={Dashboard}/>
-                <PrivateLayoutRoute path="/profile/:id" component={Profile} />
-                <PrivateLayoutRoute path="/profile" component={Profile} />
+                <PrivateLayoutRoute exact path="/profile/:id" component={Profile} />
+                <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} />
                 <PrivateLayoutRoute path="/members" component={Members} />
+                <PrivateLayoutRoute path="/squads" component={Squads} />
 
                 {/* Auth routes */}
                 <Route path="/password/request" component={PasswordRequestPage}/>
