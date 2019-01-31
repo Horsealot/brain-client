@@ -15,7 +15,7 @@ export function login(username, password) {
                 },
                 error => {
                     dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                    dispatch(error(error));
                 }
             );
     };
@@ -35,13 +35,18 @@ export function signup(token, password, firstname, lastname) {
                 },
                 error => {
                     dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                    dispatch(error(error));
                 }
             );
     };
 
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.SIGNUP_FAILURE, error } }
+}
+
+export function updateUser(user) {
+    const newUser = userService.updateLocalUser(user);
+    return { type: userConstants.USER_UPDATED, user: newUser }
 }
 
 export function logout() {

@@ -13,6 +13,7 @@ import {PrivateLayoutRoute} from "./components/PrivateLayoutRoute";
 import Members from "./components/Members";
 import ProfileEdition from "./components/ProfileEdition";
 import Squads from "./components/Squads";
+import Alerts from "./components/Alerts";
 
 class Main extends Component {
   render() {
@@ -30,10 +31,12 @@ class Main extends Component {
                 <Route path="/password/reset/:token" component={PasswordResetPage}/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/signup/:token" component={SignupPage}/>
+                <Alerts/>
             </div>
         </Router>
     );
   }
 }
+
 
 export default Main;

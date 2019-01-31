@@ -6,6 +6,7 @@ export const userService = {
     signup,
     logout,
     handleResponse,
+    updateUser,
     updateLocalUser
 };
 
@@ -43,13 +44,29 @@ function signup(token, password, firstname, lastname) {
         });
 }
 
+function updateUser(user) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({user})
+    };
+
+    return fetch(`${config.apiUrl}/users/${user._id}`, requestOptions)
+        .then(handleResponse)
+        .then((data) => {
+            return data;
+        });
+}
+
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
 
 function updateLocalUser(user) {
-    localStorage.setItem('user', JSON.stringify({...JSON.parse(localStorage.getItem('user')), ...user}));
+    const newUser = {...JSON.parse(localStorage.getItem('user')), ...user};
+    localStorage.setItem('user', JSON.stringify(newUser));
+    return newUser;
 }
 
 function getAll() {

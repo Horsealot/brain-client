@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import { isAdmin } from "../_helpers/admin-validator";
 import {getUserPicture} from "../_helpers/user-picture";
 import {Link} from "react-router-dom";
-import {history} from "../store";
+import connect from "react-redux/es/connect/connect";
 
 class MyProfile extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: JSON.parse(localStorage.getItem('user')),
             isAdmin: isAdmin(),
             toggleMenu: false
         };
@@ -24,7 +23,8 @@ class MyProfile extends Component {
     }
 
     render() {
-        const { user, toggleMenu, isAdmin } = this.state;
+        const { toggleMenu, isAdmin } = this.state;
+        const { user } = this.props.authentication;
         return (
             <div className='my-profile'>
                 <img className='my-profile__picture' onClick={this.toggleMenu} src={getUserPicture(user)}/>
@@ -41,4 +41,12 @@ class MyProfile extends Component {
     }
 }
 
-export default MyProfile;
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication
+    };
+}
+
+const connectedMyProfile = connect(mapStateToProps, null)(MyProfile);
+export default connectedMyProfile;

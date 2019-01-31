@@ -1,0 +1,88 @@
+.alerts {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  .alert {
+    width: 300px;
+    margin: 10px 10px;
+    border-radius: 10px;
+    padding: 10px;
+    &-error {
+      background: #960000;
+      @include animation(alertFadeIn 0.5s);
+    }
+    &-success {
+      @include animation(alertFadeInAndOut 5s);
+      -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+@keyframes alertFadeIn {
+  from { opacity: 0;transform: translateY(20px); }
+  to   { opacity: 1;transform: translateY(0); }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes alertFadeIn {
+  from { opacity: 0;transform: translateY(20px); }
+  to   { opacity: 1;transform: translateY(0); }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes alertFadeIn {
+  from { opacity: 0;transform: translateY(20px); }
+  to   { opacity: 1;transform: translateY(0); }
+}
+
+/* Internet Explorer */
+@-ms-keyframes alertFadeIn {
+  from { opacity: 0;transform: translateY(20px); }
+  to   { opacity: 1;transform: translateY(0); }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes alertFadeIn {
+  from { opacity: 0;transform: translateY(20px); }
+  to   { opacity: 1;transform: translateY(0); }
+}
+
+@keyframes alertFadeInAndOut {
+  0% { opacity: 0;transform: translateY(20px); }
+  10% { opacity: 1;transform: translateY(0); }
+  90%   { opacity: 1;transform: translateY(0); }
+  100%   { opacity: 0;transform: translateY(-10px); }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes alertFadeInAndOut {
+  0% { opacity: 0;transform: translateY(20px); }
+  10% { opacity: 1;transform: translateY(0); }
+  90%   { opacity: 1;transform: translateY(0); }
+  100%   { opacity: 0;transform: translateY(-10px); }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes alertFadeInAndOut {
+  0% { opacity: 0;transform: translateY(20px); }
+  10% { opacity: 1;transform: translateY(0); }
+  90%   { opacity: 1;transform: translateY(0); }
+  100%   { opacity: 0;transform: translateY(-10px); }
+}
+
+/* Internet Explorer */
+@-ms-keyframes alertFadeInAndOut {
+  0% { opacity: 0;transform: translateY(20px); }
+  10% { opacity: 1;transform: translateY(0); }
+  90%   { opacity: 1;transform: translateY(0); }
+  100%   { opacity: 0;transform: translateY(-10px); }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes alertFadeInAndOut {
+  0% { opacity: 0;transform: translateY(20px); }
+  10% { opacity: 1;transform: translateY(0); }
+  90%   { opacity: 1;transform: translateY(0); }
+  100%   { opacity: 0;transform: translateY(-10px); }
+}

@@ -3,7 +3,6 @@ import {Button, Container, Form, FormGroup} from "reactstrap";
 import FloatingLabelInput from "./FloatingLabelInput";
 import authHeader from "../_helpers/auth-header";
 import config from "../config";
-import {userService} from "../_services/user.service";
 import DatePicker from "react-datepicker";
 import PhoneInput from 'react-phone-number-input';
 
@@ -14,6 +13,13 @@ import FloatingTextareaInput from "./FloatingTextareaInput";
 import {isAdmin} from "../_helpers/admin-validator";
 import SquadSelect from "./SquadSelect";
 import RoleSelect from "./RoleSelect";
+import {bindActionCreators} from "redux";
+import {updateUser} from "../actions/user.actions";
+import {displayAlert} from '../actions/alert.actions';
+import connect from "react-redux/es/connect/connect";
+import {userService} from "../_services/user.service";
+
+import { alertConstants } from './../_constants/alert.constants';
 
 class Profile extends Component {
     constructor(props) {
@@ -81,22 +87,21 @@ class Profile extends Component {
         };
 
         return fetch(`${config.apiUrl}/users/${this.state.user._id}`, requestOptions)
-            .then((response) => {
-                return response.text().then((text) => {
-                    if (!response.ok) {
-                        this.setState({loaded: true});
-                        return;
+            .then(userService.handleResponse)
+            .then((data) => {
+                let updatedUser = {};
+                for (let key in data.user) {
+                    if(data.user[key] === 'updated') {
+                        updatedUser[key] = this.state.user[key];
                     }
-                    const data = text && JSON.parse(text);
-                    let updatedUser = {};
-                    for (let key in data.user) {
-                        if(data.user[key] === 'updated') {
-                            updatedUser[key] = this.state.user[key];
-                        }
-                    }
-                    userService.updateLocalUser(updatedUser);
-                    this.props.editionCompleted();
-                });
+                }
+                if(this.state.isOwner) {
+                    this.props.updateUser(updatedUser);
+                }
+                this.props.editionCompleted();
+                this.props.displayAlert(alertConstants.SUCCESS, 'User saved');
+            }).catch((error) => {
+                this.props.displayAlert(alertConstants.ERROR, `Internal error occured [${error}]`);
             });
     }
 
@@ -270,4 +275,10 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ updateUser, displayAlert }, dispatch);
+}
+
+const connectedProfile = connect(null, mapDispatchToProps)(Profile);
+export default connectedProfile;

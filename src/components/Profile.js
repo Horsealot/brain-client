@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Button, Container} from "reactstrap";
+import {Button} from "reactstrap";
 import authHeader from "../_helpers/auth-header";
 import config from "../config";
 import FullPageLoader from "./FullPageLoader";
 import NotFound from "./NotFound";
-import {Link} from "react-router-dom";
 import ProfileEdition from "./ProfileEdition";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class Profile extends Component {
     constructor(props) {
@@ -14,7 +14,9 @@ class Profile extends Component {
         this.state = {
             user: null,
             loaded: false,
-            inEdition: false
+            inEdition: false,
+            isOwner: false,
+            isAdmin: false
         };
         this.toggleEdition = this.toggleEdition.bind(this);
         this.editionCompleted = this.editionCompleted.bind(this);
@@ -40,8 +42,9 @@ class Profile extends Component {
                     }
                     const data = text && JSON.parse(text);
                     const myUser = JSON.parse(localStorage.getItem('user'));
+                    const isOwner = data.user && myUser && data.user._id === myUser._id;
                     const isAdmin = data.user && myUser && data.user._id === myUser._id;
-                    this.setState({user: data.user, loaded: true, admin: isAdmin });
+                    this.setState({user: data.user, loaded: true, isOwner, isAdmin});
                 });
             });
     }
@@ -56,7 +59,7 @@ class Profile extends Component {
     }
 
     render() {
-        const { user, loaded, admin, inEdition } = this.state;
+        const { user, loaded, isOwner, isAdmin, inEdition } = this.state;
         if(!loaded) {
             return (<FullPageLoader />);
         }
@@ -67,10 +70,10 @@ class Profile extends Component {
             return (<ProfileEdition user={user} editionCompleted={this.editionCompleted}/>);
         }
         return (
-            <Container className='profile flex flex--start-center flex--column'>
+            <div className='profile flex flex--start-center flex--column'>
                 <img src={user.picture} className='profile__avatar' alt={user.firstname + ' ' + user.lastname}/>
                 {
-                    admin && (
+                    (isOwner || isAdmin) && (
                         <Button onClick={this.toggleEdition} className='profile__edit'>Edit</Button>
                         // <Link to={`/profile/${this.props.match.params.id}/edition`}>Edit</Link>
                     )
@@ -84,7 +87,32 @@ class Profile extends Component {
                     user.scorecard &&
                         <div className='profile__scorecard'>{ user.scorecard }</div>
                 }
-            </Container>
+
+                { isOwner &&
+                    <div className='profile__actions'>
+                        <a href="mailto:alexandra@horsealot.com?Subject=Hello%20again" target="_top">
+                            <div className='profile__actions__action flex flex--center-center'>
+                                <div className='flex--grow'>
+                                    Request meeting with alexandra
+                                </div>
+                                <div className='profile__actions__icon'>
+                                    <FontAwesomeIcon icon="hand-peace" />
+                                </div>
+
+                            </div>
+                        </a>
+                        <div className='profile__actions__action flex flex--center-center'>
+                            <div className='flex--grow'>
+                                Request meeting with alexandra
+                            </div>
+                            <div className='profile__actions__icon'>
+                                <FontAwesomeIcon icon="hand-peace" />
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
         );
     }
 }

@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  padding: 10px;
+  padding: 10px 15px 10px 10px;
   &__picture {
     width: 30px;
     border-radius: 50%;
@@ -27,7 +27,7 @@
       content: '';
       position: absolute;
       top: -5px;
-      right: 15px;
+      right: 20px;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-bottom: 5px solid $lighter-black;
