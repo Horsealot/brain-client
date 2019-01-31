@@ -6,6 +6,7 @@ import FullPageLoader from "./FullPageLoader";
 import NotFound from "./NotFound";
 import ProfileEdition from "./ProfileEdition";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Link} from "react-router-dom";
 
 class Profile extends Component {
     constructor(props) {
@@ -88,8 +89,21 @@ class Profile extends Component {
                         <div className='profile__scorecard'>{ user.scorecard }</div>
                 }
 
-                { isOwner &&
-                    <div className='profile__actions'>
+                <div className='profile__actions'>
+                    { isAdmin && user.administrativeLink &&
+                        <a href={user.administrativeLink} target='_blank'>
+                            <div className='profile__actions__action flex flex--center-center'>
+                                <div className='flex--grow'>
+                                    Administrative follow up
+                                </div>
+                                <div className='profile__actions__icon'>
+                                    <FontAwesomeIcon icon="bars" />
+                                </div>
+
+                            </div>
+                        </a>
+                    }
+                    { isOwner &&
                         <a href="mailto:alexandra@horsealot.com?Subject=Hello%20again" target="_top">
                             <div className='profile__actions__action flex flex--center-center'>
                                 <div className='flex--grow'>
@@ -101,17 +115,8 @@ class Profile extends Component {
 
                             </div>
                         </a>
-                        <div className='profile__actions__action flex flex--center-center'>
-                            <div className='flex--grow'>
-                                Request meeting with alexandra
-                            </div>
-                            <div className='profile__actions__icon'>
-                                <FontAwesomeIcon icon="hand-peace" />
-                            </div>
-
-                        </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         );
     }

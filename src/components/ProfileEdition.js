@@ -168,7 +168,7 @@ class Profile extends Component {
                     { this.renderLabelInput('jobTitle', 'Job title') }
                 </div>
                 <div className='col-sm-12'>
-                    { this.renderTextareaInput('scorecard', 'scorecard') }
+                    { this.renderTextareaInput('scorecard', 'Scorecard') }
                 </div>
                 <div className='col-sm-6'>
                     <label className="floating-form">Squads</label>
@@ -193,6 +193,9 @@ class Profile extends Component {
                             this.handleChange(e);
                         }}
                     />
+                </div>
+                <div className='col-sm-6'>
+                    { this.renderLabelInput('administrativeLink', 'Administrative Link') }
                 </div>
                 { !isOwner &&
                     <div className='col-sm-6'>
