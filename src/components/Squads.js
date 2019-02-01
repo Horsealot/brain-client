@@ -46,7 +46,7 @@ class Squads extends Component {
             for(let i = 0; i < squads[squad].length; i++) {
                 const squadMember = squads[squad][i];
                 squadMembers.push(
-                    <Link to={`/profile/${squadMember._id}`} key={`${squad}.${squadMember._id}`} className='squads__members__member flex flex--column flex--center-center'>
+                    <Link to={`/profile/${squadMember.id}`} key={`${squad}.${squadMember.id}`} className='squads__members__member flex flex--column flex--center-center'>
                         <img src={getUserPicture(squadMember)} className='squads__members__member__picture'/>
                         <div className='squads__members__member__name'>{ squadMember.firstname }</div>
                         <div className='squads__members__member__job'>{ squadMember.jobTitle }</div>

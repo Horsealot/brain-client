@@ -29,7 +29,7 @@ class MyProfile extends Component {
             <div className='my-profile'>
                 <img className='my-profile__picture' onClick={this.toggleMenu} src={getUserPicture(user)}/>
                 <div className={(toggleMenu ? 'open' : '') + ' my-profile__menu flex flex--column'}>
-                    <Link to={`/profile/${user._id}`} className='my-profile__menu__link'>My profile</Link>
+                    <Link to={`/profile/${user.id}`} className='my-profile__menu__link'>My profile</Link>
                     <Link to={`/squads`} className='my-profile__menu__link'>Team faces</Link>
                     <Link to={`/login`} className='my-profile__menu__link'>Logout</Link>
                     { isAdmin &&

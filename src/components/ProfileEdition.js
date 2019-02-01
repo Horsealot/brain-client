@@ -32,7 +32,7 @@ class Profile extends Component {
 
         this.state = {
             user,
-            isOwner: (user._id === JSON.parse(localStorage.getItem('user'))._id),
+            isOwner: (user.id === JSON.parse(localStorage.getItem('user')).id),
             isAdmin: isAdmin(),
             userError: {},
             submitted: false
@@ -86,7 +86,7 @@ class Profile extends Component {
             body: JSON.stringify({user: this.state.user})
         };
 
-        return fetch(`${config.apiUrl}/users/${this.state.user._id}`, requestOptions)
+        return fetch(`${config.apiUrl}/users/${this.state.user.id}`, requestOptions)
             .then(userService.handleResponse)
             .then((data) => {
                 let updatedUser = {};

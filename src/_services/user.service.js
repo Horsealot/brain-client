@@ -51,7 +51,7 @@ function updateUser(user) {
         body: JSON.stringify({user})
     };
 
-    return fetch(`${config.apiUrl}/users/${user._id}`, requestOptions)
+    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions)
         .then(handleResponse)
         .then((data) => {
             return data;

@@ -32,6 +32,7 @@ class FloatingTextareaInput extends React.Component {
 
     render() {
         let { label, formClass, extrablock, ...props } = this.props;
+        let { value } = this.state;
         const { isFocused } = this.state;
         if(!formClass) formClass = "";
         return (
@@ -41,6 +42,7 @@ class FloatingTextareaInput extends React.Component {
                 </Label>
                 <TextareaAutosize
                     {...props}
+                    value={value}
                     className='form-control'
                     type='textarea'
                     onChange={this.handleChange}

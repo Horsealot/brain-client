@@ -81,7 +81,7 @@ class Members extends Component {
             })
         };
 
-        return fetch(`${config.apiUrl}/users/${userToUpdate._id}`, requestOptions)
+        return fetch(`${config.apiUrl}/users/${userToUpdate.id}`, requestOptions)
             .then(userService.handleResponse)
             .then((data) => {
                 const users = this.state.users.slice();
@@ -120,9 +120,9 @@ class Members extends Component {
                     </thead>
                     <tbody>
                     {users.map((user, index) => (
-                        <tr key={user._id}>
+                        <tr key={user.id}>
                             <td className='align-middle'>
-                                <Link to={'/profile/' + user._id }>{ user.firstname } { user.lastname }</Link>
+                                <Link to={'/profile/' + user.id }>{ user.firstname } { user.lastname }</Link>
                             </td>
                             <td className='align-middle' style={{width: '30%'}}>
                                 <SquadSelect

@@ -43,8 +43,8 @@ class Profile extends Component {
                     }
                     const data = text && JSON.parse(text);
                     const myUser = JSON.parse(localStorage.getItem('user'));
-                    const isOwner = data.user && myUser && data.user._id === myUser._id;
-                    const isAdmin = data.user && myUser && data.user._id === myUser._id;
+                    const isOwner = data.user && myUser && data.user.id === myUser.id;
+                    const isAdmin = data.user && myUser && data.user.id === myUser.id;
                     this.setState({user: data.user, loaded: true, isOwner, isAdmin});
                 });
             });
