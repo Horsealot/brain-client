@@ -8,7 +8,8 @@ export const userService = {
     handleResponse,
     updateUser,
     updateLocalUser,
-    getCurrentSquadName
+    getCurrentSquadName,
+    switchActiveSquad
 };
 
 function login(email, password) {
@@ -101,4 +102,12 @@ function handleResponse(response) {
 function getCurrentSquadName() {
     const currentSquad = JSON.parse(localStorage.getItem('activeSquad'));
     return (currentSquad && currentSquad.name) ? currentSquad && currentSquad.name : "";
+}
+
+function switchActiveSquad(newActiveSquad) {
+    localStorage.setItem('activeSquad', JSON.stringify(newActiveSquad));
+    let user = JSON.parse(localStorage.getItem('user'));
+    user.activeSquad = newActiveSquad;
+    localStorage.setItem('user', JSON.stringify(user));
+    return user;
 }

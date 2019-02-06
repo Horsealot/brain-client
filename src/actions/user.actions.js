@@ -1,6 +1,5 @@
 import { userConstants } from './../_constants/user.constants';
 import { userService } from './../_services/user.service';
-import { alertActions } from './alert.actions';
 import { history } from './../store';
 
 export function login(username, password) {
@@ -46,7 +45,12 @@ export function signup(token, password, firstname, lastname) {
 
 export function updateUser(user) {
     const newUser = userService.updateLocalUser(user);
-    return { type: userConstants.USER_UPDATED, user: newUser }
+    return { type: userConstants.USER_UPDATED, user: newUser };
+}
+
+export function switchSquad(squad) {
+    const updatedUser = userService.switchActiveSquad(squad);
+    return { type: userConstants.USER_SWITCH_SQUAD, user: updatedUser};
 }
 
 export function logout() {

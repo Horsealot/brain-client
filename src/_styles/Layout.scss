@@ -7,6 +7,7 @@ $menu-width: 100px;
   left: 0;
   top: 0;
   height: 100%;
+  z-index: 1;
   width: $menu-width;
   @include box-shadow(0 0 10px $light-black);
   background: $light-black;
@@ -40,6 +41,44 @@ $menu-width: 100px;
         width: 2px;
         height: 100%;
         background-color: $primary;
+      }
+    }
+  }
+  &__squad-selection {
+    &__active {
+      padding-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    &__list {
+      position: absolute;
+      right: -10px;
+      top: 10px;
+      @include transform(translateX(100%));
+      z-index: 10;
+      background: white;
+      padding: 10px;
+      width: 180px;
+      border-radius: 3px;
+      @include box-shadow(0 0 2px white);
+      &__title {
+        color: $black;
+        font-size: 12px;
+        font-weight: 900;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+      }
+      &__squad {
+        color: $black;
+        font-size: 13px;
+        cursor: pointer;
+        &:hover {
+          font-weight: 500;
+        }
+        &.current {
+          font-weight: 600;
+          color: black;
+        }
       }
     }
   }

@@ -30,6 +30,11 @@ export default function authentication(state = initialState, action) {
             };
         case userConstants.LOGOUT:
             return {};
+        case userConstants.USER_SWITCH_SQUAD:
+            return {
+                loggedIn: true,
+                user: action.user
+            };
         default:
             return state
     }
