@@ -1,0 +1,10 @@
+@import './../atoms.scss';
+
+.new-squad-form {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  @include box-shadow(0 0 10px $light-black);
+  background: $light-black;
+  border-radius: 10px;
+  padding: 10px;
+}

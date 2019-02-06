@@ -1,0 +1,18 @@
+@import './../atoms.scss';
+
+.admin-squad {
+  padding-bottom: 40px;
+  position: relative;
+  & + & {
+    padding-top: 40px;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 30%;
+      width: 40%;
+      height: 1px;
+      background: $light-black;
+    }
+  }
+}

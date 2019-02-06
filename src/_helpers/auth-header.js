@@ -8,3 +8,16 @@ export default function authHeader() {
         return {};
     }
 }
+
+export function squadHeader(squadId) {
+    if(squadId) {
+        return { 'Brain-squad': squadId };
+    }
+    let activeSquad = JSON.parse(localStorage.getItem('activeSquad'));
+
+    if (activeSquad && activeSquad.id) {
+        return { 'Brain-squad': activeSquad.id };
+    } else {
+        return {};
+    }
+}

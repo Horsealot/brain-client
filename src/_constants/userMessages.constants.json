@@ -8,5 +8,16 @@
   "PASSWORD_RESET": {
     "EXPIRED": "The link is expired, please request a new one",
     "UNKNOWN": "Invalid link, please request a new one"
+  },
+  "SQUAD_INVITE_USER": {
+    "USER_INVITED": "User invited to the squad",
+    "USER_ADDED": "User added to the squad",
+    "USER_ALREADY_IN": "User already in the squad",
+    "INTERNAL_ERROR": "Internal error"
+  },
+  "NEW_SQUAD_FORM": {
+    "SUCCESS": "Squad has been created",
+    "EXISTING": "Squad is already existing",
+    "INTERNAL_ERROR": "Internal error"
   }
 }

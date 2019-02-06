@@ -8,33 +8,29 @@ const rolesOptions = [
     { value: 'USER', label: 'User' }
 ];
 
-class RoleSelect extends Component {
+class SingleRoleSelect extends Component {
     constructor(props) {
         super(props);
 
         let value = this.props.value;
-        if(!value) {
-            value = [];
-        }
-        this.mapToOption = this.mapToOption.bind(this);
-        this.mapToValue = this.mapToValue.bind(this);
 
         this.state = {
             value: value,
             key: this.props.selectKey
         };
+
+        this.mapToOption = this.mapToOption.bind(this);
+        this.mapToValue = this.mapToValue.bind(this);
     }
 
-    mapToOption(values) {
-        let userOptions = [];
-        values.forEach((value) => {
-            rolesOptions.forEach((option) => {
-                if(option.value === value) {
-                    userOptions.push(option);
-                }
-            })
-        });
-        return userOptions
+    mapToOption(value) {
+        let mappedOption = "";
+        rolesOptions.forEach((option) => {
+            if(option.value === value) {
+                mappedOption = option;
+            }
+        })
+        return mappedOption;
     }
 
     mapToValue(squads) {
@@ -47,17 +43,14 @@ class RoleSelect extends Component {
         const { value, key } = this.state;
         return (
             <Select
-                closeMenuOnSelect={false}
-                components={makeAnimated()}
                 defaultValue={this.mapToOption(value)}
-                isMulti
-                options={rolesOptions}
-                styles={multiSelectStyle}
                 onBlur={() => {this.props.onBlur(key)}}
-                onChange={(newVal) => {this.props.onChange(this.mapToValue(newVal), key)}}
+                options={rolesOptions}
+                onChange={(newVal) => {this.props.onChange(newVal.value, key)}}
+                styles={multiSelectStyle}
             />
         );
     }
 }
 
-export default RoleSelect;
+export default SingleRoleSelect;

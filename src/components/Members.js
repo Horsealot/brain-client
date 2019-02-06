@@ -12,7 +12,7 @@ import makeAnimated from 'react-select/lib/animated';
 import { multiSelectStyle } from './../_styles/_select';
 import SectionTitle from "./SectionTitle";
 import SquadSelect from "./SquadSelect";
-import RoleSelect from "./RoleSelect";
+import MultiRoleSelect from "./MultiRoleSelect";
 
 class Members extends Component {
     constructor(props) {
@@ -143,7 +143,7 @@ class Members extends Component {
                                 {/*/>*/}
                             </td>
                             <td className='align-middle' style={{width: '30%'}}>
-                                <RoleSelect
+                                <MultiRoleSelect
                                     selectKey={index}
                                     value={user.roles}
                                     onBlur={(index) => {this.updateUser(index)}}

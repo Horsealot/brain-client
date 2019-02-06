@@ -7,6 +7,10 @@ import NotFound from "./NotFound";
 import ProfileEdition from "./ProfileEdition";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
+import connect from "react-redux/es/connect/connect";
+import {bindActionCreators} from "redux";
+import {updateUser} from "../actions/user.actions";
+import {displayAlert} from "../actions/alert.actions";
 
 class Profile extends Component {
     constructor(props) {
@@ -46,6 +50,9 @@ class Profile extends Component {
                     const isOwner = data.user && myUser && data.user.id === myUser.id;
                     const isAdmin = data.user && myUser && data.user.id === myUser.id;
                     this.setState({user: data.user, loaded: true, isOwner, isAdmin});
+                    if(isOwner) {
+                        this.props.updateUser(data.user);
+                    }
                 });
             });
     }
@@ -122,4 +129,9 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ updateUser }, dispatch);
+}
+
+const connectedProfile = connect(null, mapDispatchToProps)(Profile);
+export default connectedProfile;

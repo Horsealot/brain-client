@@ -12,7 +12,7 @@ import 'react-phone-number-input/style.css';
 import FloatingTextareaInput from "./FloatingTextareaInput";
 import {isAdmin} from "../_helpers/admin-validator";
 import SquadSelect from "./SquadSelect";
-import RoleSelect from "./RoleSelect";
+import MultiRoleSelect from "./MultiRoleSelect";
 import {bindActionCreators} from "redux";
 import {updateUser} from "../actions/user.actions";
 import {displayAlert} from '../actions/alert.actions';
@@ -21,7 +21,7 @@ import {userService} from "../_services/user.service";
 
 import { alertConstants } from './../_constants/alert.constants';
 
-class Profile extends Component {
+class ProfileEdition extends Component {
     constructor(props) {
         super(props);
 
@@ -184,7 +184,7 @@ class Profile extends Component {
                 </div>
                 <div className='col-sm-6'>
                     <label className="floating-form">Roles</label>
-                    <RoleSelect
+                    <MultiRoleSelect
                         selectKey={0}
                         value={user.roles}
                         onBlur={() => {}}
@@ -283,5 +283,5 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ updateUser, displayAlert }, dispatch);
 }
 
-const connectedProfile = connect(null, mapDispatchToProps)(Profile);
-export default connectedProfile;
+const connectedProfileEdition = connect(null, mapDispatchToProps)(ProfileEdition);
+export default connectedProfileEdition;

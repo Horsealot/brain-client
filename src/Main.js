@@ -14,6 +14,7 @@ import Members from "./components/Members";
 import ProfileEdition from "./components/ProfileEdition";
 import Squads from "./components/Squads";
 import Alerts from "./components/Alerts";
+import AdminUsers from "./components/AdminUsers";
 
 class Main extends Component {
   render() {
@@ -23,7 +24,7 @@ class Main extends Component {
                 <PrivateLayoutRoute path="/" exact component={Dashboard}/>
                 <PrivateLayoutRoute exact path="/profile/:id" component={Profile} />
                 <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} />
-                <PrivateLayoutRoute path="/admin" component={Members} />
+                <PrivateLayoutRoute path="/admin" component={AdminUsers} />
                 <PrivateLayoutRoute path="/squads" component={Squads} />
 
                 {/* Auth routes */}

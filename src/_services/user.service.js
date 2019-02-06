@@ -7,7 +7,8 @@ export const userService = {
     logout,
     handleResponse,
     updateUser,
-    updateLocalUser
+    updateLocalUser,
+    getCurrentSquadName
 };
 
 function login(email, password) {
@@ -22,6 +23,9 @@ function login(email, password) {
         .then(data => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(data.user));
+            if(data.user.squads && data.user.squads.length) {
+                localStorage.setItem('activeSquad', JSON.stringify(data.user.squads[0]));
+            }
 
             return data.user;
         });
@@ -92,4 +96,9 @@ function handleResponse(response) {
         const data = text && JSON.parse(text);
         return data;
     });
+}
+
+function getCurrentSquadName() {
+    const currentSquad = JSON.parse(localStorage.getItem('activeSquad'));
+    return (currentSquad && currentSquad.name) ? currentSquad && currentSquad.name : "";
 }
