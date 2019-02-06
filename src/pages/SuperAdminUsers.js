@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { Container, Table} from "reactstrap";
-import SectionTitle from "./SectionTitle";
+import SectionTitle from "../components/SectionTitle";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import authHeader, {squadHeader} from "../_helpers/auth-header";
-import config from "../config";
-import {userService} from "../_services/user.service";
-import SingleRoleSelect from "./SingleRoleSelect";
-import SquadInviteUser from "./SquadInviteUser";
+import {squadService} from "../_services/squad.service";
+import SingleRoleSelect from "../components/SingleRoleSelect";
+import SquadInviteUser from "../components/SquadInviteUser";
 import {bindActionCreators} from "redux";
 import {displayAlert} from "../actions/alert.actions";
 import connect from "react-redux/es/connect/connect";
 import {alertConstants} from "../_constants/alert.constants";
-import NewSquadForm from "./NewSquadForm";
+import NewSquadForm from "../components/NewSquadForm";
 
-import './../_styles/_components/_admin-squad.scss';
+import '../_styles/_components/_admin-squad.scss';
 
 class SuperAdminUsers extends Component {
     constructor(props) {
@@ -28,6 +26,7 @@ class SuperAdminUsers extends Component {
         this.remapUser = this.remapUser.bind(this);
         this.addUserToSquad = this.addUserToSquad.bind(this);
         this.addNewSquad = this.addNewSquad.bind(this);
+        this.removeFromSquad = this.removeFromSquad.bind(this);
     }
 
 
@@ -62,31 +61,33 @@ class SuperAdminUsers extends Component {
         this.setState({squads});
     }
 
+    removeFromSquad(user, userIndex, squad, squadIndex) {
+        squadService.removeUserFromSquad(user.id, squad.id).then(() => {
+            this.props.displayAlert(alertConstants.SUCCESS, 'User removed from the squad');
+            let squads = this.state.squads.slice();
+            if(squads[squadIndex] && squads[squadIndex].users && squads[squadIndex].users[userIndex]) {
+                squads[squadIndex].users.splice(userIndex, 1);
+            }
+            this.setState({squads});
+        }).catch(() => {
+            this.props.displayAlert(alertConstants.ERROR, 'Error > User cannot be removed from the squad');
+        });
+    }
+
     updateUser(index, squadIndex) {
         if(!this.state.squads[squadIndex].users || this.state.squads[squadIndex].users.length <= index || !this.state.squads[squadIndex].users[index].modified) {
             return;
         }
         const userToUpdate = this.state.squads[squadIndex].users[index];
-        const requestOptions = {
-            method: 'POST',
-            headers: { ...authHeader(), ...squadHeader(), 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user: {
-                    role: userToUpdate.role,
-                }
-            })
-        };
+        const squadToPush = this.state.squads[squadIndex];
 
-        return fetch(`${config.apiUrl}/users/${userToUpdate.id}`, requestOptions)
-            .then(userService.handleResponse)
-            .then((data) => {
-                if(!data || !data.user || !data.user['role'] || data.user['role'] !== 'updated') {
-                    this.props.displayAlert(alertConstants.ERROR, 'Error > Role not updated');
-                }
-                const squads = this.state.squads.slice();
-                squads[squadIndex].users[index].modified = false;
-                this.setState({squads});
-            });
+        squadService.updateUserRoleInSquad(userToUpdate.id, squadToPush.id, userToUpdate.role).then(() => {
+            const squads = this.state.squads.slice();
+            squads[squadIndex].users[index].modified = false;
+            this.setState({squads});
+        }).catch(() => {
+            this.props.displayAlert(alertConstants.ERROR, 'Error > Role not updated');
+        });
     }
 
     render() {
@@ -121,7 +122,7 @@ class SuperAdminUsers extends Component {
                                             />
                                         </td>
                                         <td className='align-middle'></td>
-                                        <td className='align-middle'>
+                                        <td className='align-middle' onClick={() => this.removeFromSquad(user, index, squad, squadIndex)}>
                                             <FontAwesomeIcon icon="trash-alt" />
                                         </td>
                                     </tr>

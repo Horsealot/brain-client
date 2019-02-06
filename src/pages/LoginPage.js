@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {bindActionCreators} from "redux";
-import { login, logout } from "../../actions/user.actions";
+import { login, logout } from "../actions/user.actions";
 
 import {Button, Form, FormGroup} from 'reactstrap';
 
-import FloatingLabelInput from './../FloatingLabelInput';
+import FloatingLabelInput from '../components/FloatingLabelInput';
 
 import {Link} from "react-router-dom";
-import OnePageForm from "./../OnePageForm";
-import userMessages from './../../_constants/userMessages.constants';
+import OnePageForm from "../components/OnePageForm";
+import userMessages from '../_constants/userMessages.constants';
 
 class LoginPage extends React.Component {
     constructor(props) {

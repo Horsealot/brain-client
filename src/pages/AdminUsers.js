@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { isAdmin, isAdminOfCurrentSquad } from './../_helpers/admin-validator';
+import { isAdmin, isAdminOfCurrentSquad } from '../_helpers/admin-validator';
 import SuperAdminUsers from "./SuperAdminUsers";
 import SquadUsers from "./SquadUsers";
-import NotAllowed from "./NotAllowed";
+import NotAllowed from "../components/NotAllowed";
 import authHeader, {squadHeader} from "../_helpers/auth-header";
 import config from "../config";
 import {userService} from "../_services/user.service";

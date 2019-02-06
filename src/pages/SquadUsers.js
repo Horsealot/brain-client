@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import {Button, Col, Container, Form, FormGroup, Row, Table} from "reactstrap";
-import SectionTitle from "./SectionTitle";
+import {Container, Table} from "reactstrap";
+import SectionTitle from "../components/SectionTitle";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import FloatingLabelInput from "./FloatingLabelInput";
-import {validateEmail} from "../_helpers/form-validator";
-import authHeader, {squadHeader} from "../_helpers/auth-header";
-import config from "../config";
-import {userService} from "../_services/user.service";
-import SingleRoleSelect from "./SingleRoleSelect";
-import SquadInviteUser from "./SquadInviteUser";
+import {squadService} from "../_services/squad.service";
+import SingleRoleSelect from "../components/SingleRoleSelect";
+import SquadInviteUser from "../components/SquadInviteUser";
+import {alertConstants} from "../_constants/alert.constants";
+import {bindActionCreators} from "redux";
+import {displayAlert} from "../actions/alert.actions";
+import connect from "react-redux/es/connect/connect";
 
 class SquadUsers extends Component {
     constructor(props) {
@@ -25,6 +25,7 @@ class SquadUsers extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.remapUser = this.remapUser.bind(this);
         this.addUserToSquad = this.addUserToSquad.bind(this);
+        this.removeFromSquad = this.removeFromSquad.bind(this);
     }
 
 
@@ -50,28 +51,32 @@ class SquadUsers extends Component {
         this.setState({squad});
     }
 
+    removeFromSquad(user, userIndex, squad) {
+        squadService.removeUserFromSquad(user.id, squad.id).then(() => {
+            this.props.displayAlert(alertConstants.SUCCESS, 'User removed from the squad');
+            let squad = {...this.state.squad};
+            if(squad.users && squad.users[userIndex]) {
+                squad.users.splice(userIndex, 1);
+            }
+            this.setState({squad});
+        }).catch(() => {
+            this.props.displayAlert(alertConstants.ERROR, 'Error > User cannot be removed from the squad');
+        });
+    }
+
     updateUser(index) {
         if(!this.state.squad.users || this.state.squad.users.length <= index || !this.state.squad.users[index].modified) {
             return;
         }
-        const userToUpdate = this.state.squad.users[index];
-        const requestOptions = {
-            method: 'POST',
-            headers: { ...authHeader(), ...squadHeader(), 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user: {
-                    role: userToUpdate.role,
-                }
-            })
-        };
-
-        return fetch(`${config.apiUrl}/users/${userToUpdate.id}`, requestOptions)
-            .then(userService.handleResponse)
-            .then((data) => {
-                const users = this.state.squad.users.slice();
-                users[index].modified = false;
-                this.setState({users});
-            })
+        const {squad} = this.state;
+        const userToUpdate = squad.users[index];
+        squadService.updateUserRoleInSquad(userToUpdate.id, squad.id, userToUpdate.role).then(() => {
+            const users = this.state.squad.users.slice();
+            users[index].modified = false;
+            this.setState({users});
+        }).catch(() => {
+            this.props.displayAlert(alertConstants.ERROR, 'Error > Role not updated');
+        });
     }
 
     render() {
@@ -103,7 +108,7 @@ class SquadUsers extends Component {
                                 />
                             </td>
                             <td className='align-middle'></td>
-                            <td className='align-middle'>
+                            <td className='align-middle' onClick={() => this.removeFromSquad(user, index, squad)}>
                                 <FontAwesomeIcon icon="trash-alt" />
                             </td>
                         </tr>
@@ -119,4 +124,9 @@ class SquadUsers extends Component {
     }
 }
 
-export default SquadUsers;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ displayAlert }, dispatch);
+}
+
+const connectedSquadUsers = connect(null, mapDispatchToProps)(SquadUsers);
+export default connectedSquadUsers;

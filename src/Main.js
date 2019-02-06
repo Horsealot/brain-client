@@ -4,17 +4,16 @@ import { Route } from "react-router";
 import Profile from "./components/Profile";
 
 import { history } from './store';
-import {LoginPage} from "./components/LoginPage/LoginPage";
-import {SignupPage} from "./components/SignupPage/SignupPage";
-import PasswordRequestPage from "./components/PasswordRequestPage/PasswordRequestPage";
-import PasswordResetPage from "./components/PasswordResetPage/PasswordResetPage";
+import {LoginPage} from "./pages/LoginPage";
+import {SignupPage} from "./pages/SignupPage";
+import PasswordRequestPage from "./pages/PasswordRequestPage";
+import PasswordResetPage from "./pages/PasswordResetPage";
 import Dashboard from "./components/Dashboard";
 import {PrivateLayoutRoute} from "./components/PrivateLayoutRoute";
-import Members from "./components/Members";
 import ProfileEdition from "./components/ProfileEdition";
 import Squads from "./components/Squads";
 import Alerts from "./components/Alerts";
-import AdminUsers from "./components/AdminUsers";
+import AdminUsers from "./pages/AdminUsers";
 
 class Main extends Component {
   render() {

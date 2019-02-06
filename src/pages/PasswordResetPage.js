@@ -1,11 +1,11 @@
 import React from 'react';
 
 import {Button, Form, FormGroup} from 'reactstrap';
-import config from "../../config";
-import OnePageForm from "./../OnePageForm";
-import FloatingLabelInput from "../FloatingLabelInput";
-import userMessages from "../../_constants/userMessages.constants";
-import {history} from "../../store";
+import config from "../config";
+import OnePageForm from "../components/OnePageForm";
+import FloatingLabelInput from "../components/FloatingLabelInput";
+import userMessages from "../_constants/userMessages.constants";
+import {history} from "../store";
 
 class PasswordResetPage extends React.Component {
     constructor(props) {

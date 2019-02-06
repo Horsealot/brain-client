@@ -1,5 +1,5 @@
 import config from './../config';
-import authHeader from './../_helpers/auth-header';
+import authHeader, {squadHeader} from './../_helpers/auth-header';
 
 export const userService = {
     login,
@@ -9,7 +9,7 @@ export const userService = {
     updateUser,
     updateLocalUser,
     getCurrentSquadName,
-    switchActiveSquad
+    switchActiveSquad,
 };
 
 function login(email, password) {

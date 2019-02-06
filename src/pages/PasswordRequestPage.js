@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import {Button, Form, FormGroup} from 'reactstrap';
-import config from "../../config";
-import FloatingLabelInput from "../FloatingLabelInput";
-import userMessages from './../../_constants/userMessages.constants';
-import OnePageForm from "./../OnePageForm";
+import config from "../config";
+import FloatingLabelInput from "../components/FloatingLabelInput";
+import userMessages from '../_constants/userMessages.constants';
+import OnePageForm from "../components/OnePageForm";
 
 class PasswordRequestPage extends React.Component {
     constructor(props) {
