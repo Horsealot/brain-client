@@ -10,7 +10,7 @@ class MyProfile extends Component {
         super(props);
 
         this.state = {
-            isAdmin: isAdmin(),
+            isAdmin: isAdmin(this.props.authentication.user),
             toggleMenu: false
         };
 
@@ -26,6 +26,7 @@ class MyProfile extends Component {
         const { toggleMenu, isAdmin } = this.state;
         const { user } = this.props.authentication;
         return (
+            user ?
             <div className='my-profile'>
                 <img className='my-profile__picture' onClick={this.toggleMenu} src={getUserPicture(user)}/>
                 <div className={(toggleMenu ? 'open' : '') + ' my-profile__menu flex flex--column'}>
@@ -37,6 +38,8 @@ class MyProfile extends Component {
                     }
                 </div>
             </div>
+                :
+                <></>
         );
     }
 }

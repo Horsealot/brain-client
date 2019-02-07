@@ -15,6 +15,7 @@ import userMessages from '../_constants/userMessages.constants';
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
+        console.log("In /login");
 
         // reset login status
         this.props.logout();

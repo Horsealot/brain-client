@@ -1,12 +1,18 @@
 export default function authHeader() {
     // return authorization header with jwt token
-    let user = JSON.parse(localStorage.getItem('user'));
+    const jwtToken = getAuthToken();
 
-    if (user && user.token) {
-        return { 'Authorization': 'Bearer ' + user.token };
+    if (jwtToken) {
+        return { 'Authorization': 'Bearer ' + jwtToken };
     } else {
         return {};
     }
+}
+export function getAuthToken() {
+    return localStorage.getItem('userToken');
+}
+export function setAuthToken(token) {
+    return localStorage.setItem('userToken', token);
 }
 
 export function squadHeader(squadId) {

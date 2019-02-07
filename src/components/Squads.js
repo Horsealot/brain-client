@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import config from "../config";
 import {Container} from "reactstrap";
-import authHeader from "../_helpers/auth-header";
-import { userService } from './../_services/user.service';
 import SectionTitle from "./SectionTitle";
 import {Link} from "react-router-dom";
 import {getUserPicture} from "../_helpers/user-picture";
+import {squadService} from "../_services/squad.service";
 
 class Squads extends Component {
     constructor(props) {
@@ -17,25 +15,9 @@ class Squads extends Component {
     }
 
     componentDidMount() {
-        const requestOptions = {
-            method: 'GET',
-            headers: { ...authHeader(), 'Content-Type': 'application/json' }
-        };
-
-        return fetch(`${config.apiUrl}/squads`, requestOptions)
-            .then(userService.handleResponse)
-            .then((data) => {
-                this.setState({squads: data.squads});
-            })
-    }
-
-    sortSquads() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        let userSquads = user.squads;
-        if(!userSquads) userSquads = new Array();
-        let sortedSquads = {...this.state.squads};
-
-
+        squadService.getSquads().then((data) => {
+            this.setState({squads: data.squads});
+        });
     }
 
     buildTable = () => {
@@ -66,7 +48,6 @@ class Squads extends Component {
     }
 
     render() {
-        const { squads } = this.state;
         return (
             <Container>
                 <SectionTitle title='Brain squads'/>

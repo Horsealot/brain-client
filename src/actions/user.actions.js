@@ -9,12 +9,11 @@ export function login(username, password) {
         userService.login(username, password)
             .then(
                 user => {
-                    dispatch(success(user));
                     history.push('/');
+                    dispatch(success(user));
                 },
                 error => {
                     dispatch(failure(error));
-                    dispatch(error(error));
                 }
             );
     };
@@ -34,7 +33,6 @@ export function signup(token, password, firstname, lastname) {
                 },
                 error => {
                     dispatch(failure(error));
-                    dispatch(error(error));
                 }
             );
     };
@@ -43,14 +41,33 @@ export function signup(token, password, firstname, lastname) {
     function failure(error) { return { type: userConstants.SIGNUP_FAILURE, error } }
 }
 
-export function updateUser(user) {
-    const newUser = userService.updateLocalUser(user);
-    return { type: userConstants.USER_UPDATED, user: newUser };
+export function loadMyUser() {
+    return dispatch => {
+        userService.loadMyUser()
+            .then(
+                user => {
+                    dispatch(success(user));
+                },
+                error => {
+                    history.push('/login');
+                    dispatch(failure(error));
+                }
+            );
+    };
+
+    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-export function switchSquad(squad) {
-    const updatedUser = userService.switchActiveSquad(squad);
-    return { type: userConstants.USER_SWITCH_SQUAD, user: updatedUser};
+export function updateUser(user) {
+    return { type: userConstants.USER_UPDATED, user: user };
+}
+
+export function switchSquad(user, activeSquad) {
+    return {
+        type: userConstants.USER_SWITCH_SQUAD,
+        user: userService.switchActiveSquad(activeSquad, user),
+    };
 }
 
 export function logout() {

@@ -1,5 +1,4 @@
-export function isAdmin() {
-    let user = JSON.parse(localStorage.getItem('user'));
+export function isAdmin(user) {
     return user.roles && user.roles.indexOf('ADMIN') >= 0;
 }
 

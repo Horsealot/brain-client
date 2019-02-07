@@ -1,5 +1,6 @@
 import config from './../config';
-import authHeader, {squadHeader} from './../_helpers/auth-header';
+import authHeader from './../_helpers/auth-header';
+import {setAuthToken} from "../_helpers/auth-header";
 
 export const userService = {
     login,
@@ -7,9 +8,10 @@ export const userService = {
     logout,
     handleResponse,
     updateUser,
-    updateLocalUser,
-    getCurrentSquadName,
+    getActiveSquad,
+    getActiveSquadName,
     switchActiveSquad,
+    loadMyUser
 };
 
 function login(email, password) {
@@ -22,12 +24,12 @@ function login(email, password) {
     return fetch(`${config.apiUrl}/login`, requestOptions)
         .then(handleResponse)
         .then(data => {
+            setAuthToken(data.user.token);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(data.user));
-            if(data.user.squads && data.user.squads.length) {
-                localStorage.setItem('activeSquad', JSON.stringify(data.user.squads[0]));
+            console.log(getActiveSquad());
+            if(data.user.squads && data.user.squads.length && !getActiveSquad()) {
+                setActiveSquad(data.user.squads[0]);
             }
-
             return data.user;
         });
 }
@@ -42,8 +44,11 @@ function signup(token, password, firstname, lastname) {
     return fetch(`${config.apiUrl}/signup`, requestOptions)
         .then(handleResponse)
         .then(data => {
+            setAuthToken(data.user.token);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(data.user));
+            if(data.user.squads && data.user.squads.length && !getActiveSquad()) {
+                setActiveSquad(data.user.squads[0]);
+            }
 
             return data.user;
         });
@@ -63,15 +68,27 @@ function updateUser(user) {
         });
 }
 
-function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
+function loadMyUser() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    };
+
+    return fetch(`${config.apiUrl}/me`, requestOptions)
+        .then(handleResponse)
+        .then((data) => {
+            console.log(getActiveSquad());
+            if(data.user.squads && data.user.squads.length && !getActiveSquad()) {
+                console.log(1);
+                setActiveSquad(data.user.squads[0]);
+            }
+            return data.user;
+        });
 }
 
-function updateLocalUser(user) {
-    const newUser = {...JSON.parse(localStorage.getItem('user')), ...user};
-    localStorage.setItem('user', JSON.stringify(newUser));
-    return newUser;
+function logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('userToken');
 }
 
 function getAll() {
@@ -99,15 +116,22 @@ function handleResponse(response) {
     });
 }
 
-function getCurrentSquadName() {
-    const currentSquad = JSON.parse(localStorage.getItem('activeSquad'));
-    return (currentSquad && currentSquad.name) ? currentSquad && currentSquad.name : "";
+function getActiveSquadName() {
+    const activeSquad = getActiveSquad();
+    return (activeSquad && activeSquad.name) ? activeSquad && activeSquad.name : "";
 }
 
-function switchActiveSquad(newActiveSquad) {
+function getActiveSquad() {
+    return JSON.parse(localStorage.getItem('activeSquad'));
+}
+
+function setActiveSquad(newActiveSquad) {
+    console.log(newActiveSquad);
     localStorage.setItem('activeSquad', JSON.stringify(newActiveSquad));
-    let user = JSON.parse(localStorage.getItem('user'));
+}
+
+function switchActiveSquad(newActiveSquad, user) {
+    localStorage.setItem('activeSquad', JSON.stringify(newActiveSquad));
     user.activeSquad = newActiveSquad;
-    localStorage.setItem('user', JSON.stringify(user));
     return user;
 }

@@ -4,8 +4,19 @@ import {userService} from "./user.service";
 
 export const squadService = {
     removeUserFromSquad,
-    updateUserRoleInSquad
+    updateUserRoleInSquad,
+    getSquads
 };
+
+function getSquads() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${config.apiUrl}/squads`, requestOptions)
+        .then(userService.handleResponse);
+}
 
 function removeUserFromSquad(userId, squadId) {
     const requestOptions = {

@@ -9,7 +9,7 @@ class ActiveSquadSelection extends Component {
         super(props);
 
         this.state = {
-            activeSquadName: userService.getCurrentSquadName(),
+            activeSquadName: userService.getActiveSquadName(),
             squadSelectOpened: false
         }
 
@@ -22,7 +22,7 @@ class ActiveSquadSelection extends Component {
     }
 
     switchSquad(newSquad) {
-        this.props.switchSquad(newSquad);
+        this.props.switchSquad(this.props.authentication.user, newSquad);
         this.setState({squadSelectOpened: !this.state.squadSelectOpened});
         window.location.reload();
     }

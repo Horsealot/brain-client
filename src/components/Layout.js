@@ -4,9 +4,6 @@ import MenuLink from "./MenuLink";
 import ActiveSquadSelection from "./ActiveSquadSelection";
 
 class Layout extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

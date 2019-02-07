@@ -6,6 +6,8 @@ import NotAllowed from "../components/NotAllowed";
 import authHeader, {squadHeader} from "../_helpers/auth-header";
 import config from "../config";
 import {userService} from "../_services/user.service";
+import connect from "react-redux/es/connect/connect";
+import FullPageLoader from "../components/FullPageLoader";
 
 class AdminUsers extends Component {
     constructor(props) {
@@ -15,7 +17,7 @@ class AdminUsers extends Component {
             isLoaded: false,
             isAllowed: false,
             data: [],
-            isAdmin: isAdmin(),
+            isAdmin: isAdmin(this.props.authentication.user),
             isAdminOfCurrentSquad: isAdminOfCurrentSquad()
         };
     }
@@ -33,19 +35,30 @@ class AdminUsers extends Component {
             .then((data) => {
                 this.setState({data, isLoaded: true, isAllowed: true});
             }).catch(() => {
-                this.setState({isLoaded: false})
+                this.setState({isLoaded: true, isAllowed: false})
             });
     }
 
     render() {
         const { data, isAdmin, isAllowed, isLoaded } = this.state;
-        if(isLoaded && isAdmin) {
+        if(!isLoaded) {
+            return (<FullPageLoader />);
+        }
+        if(isAdmin) {
             return (<SuperAdminUsers data={data}/>);
-        } else if(isLoaded && isAllowed) {
+        } else if(isAllowed) {
             return (<SquadUsers data={data}/>);
         }
         return (<NotAllowed />);
     }
 }
 
-export default AdminUsers;
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication
+    };
+}
+
+const connectedAdminUsers = connect(mapStateToProps, null)(AdminUsers);
+export default connectedAdminUsers;
