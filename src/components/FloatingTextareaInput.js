@@ -42,7 +42,7 @@ class FloatingTextareaInput extends React.Component {
                 </Label>
                 <TextareaAutosize
                     {...props}
-                    value={value}
+                    value={value || ''}
                     className='form-control'
                     type='textarea'
                     onChange={this.handleChange}

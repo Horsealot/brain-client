@@ -1,3 +1,5 @@
+$avatar-width: 150px;
+
 .profile {
   padding-top: 50px;
   max-width: 1200px;
@@ -5,8 +7,23 @@
   margin: auto;
   &__avatar {
     border-radius: 50%;
-    width: 150px;
+    width: $avatar-width;
     margin-bottom: 20px;
+  }
+  &__avatar-loader {
+    position: absolute;
+    background: #222222bf;
+    width: $avatar-width;
+    height: $avatar-width;
+    top: 0;
+    left: calc(50% - (#{$avatar-width}) / 2);
+    img {
+      @include animation(App-logo-spin infinite 4s linear);
+      position: absolute;
+      width: 40px;
+      top: calc(50% - 20px);
+      left: calc(50% - 20px);
+    }
   }
   &__edit {
     margin-bottom: 10px;

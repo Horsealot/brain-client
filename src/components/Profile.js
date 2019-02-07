@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import {Button} from "reactstrap";
-import authHeader from "../_helpers/auth-header";
-import config from "../config";
 import FullPageLoader from "./FullPageLoader";
 import NotFound from "./NotFound";
 import ProfileEdition from "./ProfileEdition";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Link} from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
 import {bindActionCreators} from "redux";
 import {updateUser} from "../actions/user.actions";
-import {displayAlert} from "../actions/alert.actions";
+import {userService} from "../_services/user.service";
+import {isAdmin, isAdminOfSquad} from "../_helpers/admin-validator";
 
 class Profile extends Component {
     constructor(props) {
@@ -21,7 +19,8 @@ class Profile extends Component {
             loaded: false,
             inEdition: false,
             isOwner: false,
-            isAdmin: false
+            isSuperAdmin: false,
+            isSquadAdmin: false
         };
         this.toggleEdition = this.toggleEdition.bind(this);
         this.editionCompleted = this.editionCompleted.bind(this);
@@ -33,28 +32,29 @@ class Profile extends Component {
     }
 
     loadUser() {
-        const requestOptions = {
-            method: 'GET',
-            headers: { ...authHeader(), 'Content-Type': 'application/json' }
-        };
-
-        return fetch(`${config.apiUrl}/users/${this.props.match.params.id}`, requestOptions)
-            .then((response) => {
-                return response.text().then((text) => {
-                    if (!response.ok) {
-                        this.setState({loaded: true});
-                        return;
-                    }
-                    const data = text && JSON.parse(text);
-                    const myUser = JSON.parse(localStorage.getItem('user'));
-                    const isOwner = data.user && myUser && data.user.id === myUser.id;
-                    const isAdmin = data.user && myUser && data.user.id === myUser.id;
-                    this.setState({user: data.user, loaded: true, isOwner, isAdmin});
-                    if(isOwner) {
-                        this.props.updateUser(data.user);
-                    }
-                });
+        userService.getUser(this.props.match.params.id).then((data) => {
+            if(!data.user) {
+                return this.setState({loaded: true});
+            }
+            const isOwner = (data.user.id === this.props.authentication.user.id);
+            const isSuperAdmin = isAdmin(this.props.authentication.user);
+            let isSquadAdmin = false;
+            this.props.authentication.user.squads.forEach((squad) => {
+                if(isAdminOfSquad(squad)) {
+                    data.user.squads.forEach((otherUserSquad) => {
+                       if(otherUserSquad.id === squad.id) {
+                           isSquadAdmin = true;
+                       }
+                   })
+               }
             });
+            if(isOwner) {
+                this.props.updateUser(data.user);
+            }
+            this.setState({user: data.user, loaded: true, isOwner, isSuperAdmin, isSquadAdmin});
+        }).catch(() => {
+            this.setState({loaded: true});
+        })
     }
 
     toggleEdition() {
@@ -67,21 +67,29 @@ class Profile extends Component {
     }
 
     render() {
-        const { user, loaded, isOwner, isAdmin, inEdition } = this.state;
+        const { user, loaded, isOwner, isSuperAdmin, inEdition, isSquadAdmin } = this.state;
         if(!loaded) {
             return (<FullPageLoader />);
         }
         if(!user) {
             return (<NotFound />);
         }
+
         if(inEdition) {
-            return (<ProfileEdition user={user} editionCompleted={this.editionCompleted}/>);
+            return (<ProfileEdition
+                            user={user}
+                            isOwner={isOwner}
+                            isSuperAdmin={isSuperAdmin}
+                            inEdition={inEdition}
+                            isSquadAdmin={isSquadAdmin}
+                            editionCompleted={this.editionCompleted}
+                    />);
         }
         return (
             <div className='profile flex flex--start-center flex--column'>
                 <img src={user.picture} className='profile__avatar' alt={user.firstname + ' ' + user.lastname}/>
                 {
-                    (isOwner || isAdmin) && (
+                    (isOwner || isSuperAdmin || isSquadAdmin) && (
                         <Button onClick={this.toggleEdition} className='profile__edit'>Edit</Button>
                         // <Link to={`/profile/${this.props.match.params.id}/edition`}>Edit</Link>
                     )
@@ -129,9 +137,16 @@ class Profile extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ updateUser }, dispatch);
 }
 
-const connectedProfile = connect(null, mapDispatchToProps)(Profile);
+const connectedProfile = connect(mapStateToProps, mapDispatchToProps)(Profile);
 export default connectedProfile;

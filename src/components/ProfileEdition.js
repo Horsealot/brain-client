@@ -10,8 +10,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-phone-number-input/style.css';
 
 import FloatingTextareaInput from "./FloatingTextareaInput";
-import {isAdmin} from "../_helpers/admin-validator";
-import SquadSelect from "./SquadSelect";
 import MultiRoleSelect from "./MultiRoleSelect";
 import {bindActionCreators} from "redux";
 import {updateUser} from "../actions/user.actions";
@@ -32,10 +30,12 @@ class ProfileEdition extends Component {
 
         this.state = {
             user,
-            isOwner: (user.id === JSON.parse(localStorage.getItem('user')).id),
-            isAdmin: isAdmin(),
+            isOwner: this.props.isOwner,
+            isSuperAdmin: this.props.isSuperAdmin,
+            isSquadAdmin: this.props.isSquadAdmin,
             userError: {},
-            submitted: false
+            submitted: false,
+            pictureIsUploading: false
         };
         this.fileUpload = React.createRef();
 
@@ -150,17 +150,19 @@ class ProfileEdition extends Component {
             body: formData
         };
 
+        this.setState({pictureIsUploading: true});
         fetch(`${config.apiUrl}/uploads/picture`, requestOptions)
             .then(res => res.json())
             .then(image => {
                 this.handleChange({target: {name: 'picture', value: image.url}});
+                this.setState({pictureIsUploading: false});
             }).catch((err) => {
-
+                this.setState({pictureIsUploading: false});
             });
     }
 
     render() {
-        const { user, isAdmin, isOwner } = this.state;
+        const { user, isSuperAdmin, isOwner, isSquadAdmin, pictureIsUploading } = this.state;
 
         const adminForm = (
             <div className='row profile-edition__block'>
@@ -169,30 +171,6 @@ class ProfileEdition extends Component {
                 </div>
                 <div className='col-sm-12'>
                     { this.renderTextareaInput('scorecard', 'Scorecard') }
-                </div>
-                <div className='col-sm-6'>
-                    <label className="floating-form">Squads</label>
-                    <SquadSelect
-                        selectKey={0}
-                        value={user.squads}
-                        onBlur={() => {}}
-                        onChange={(value) => {
-                            const e = {target: {name: 'squads', value}};
-                            this.handleChange(e);
-                        }}
-                    />
-                </div>
-                <div className='col-sm-6'>
-                    <label className="floating-form">Roles</label>
-                    <MultiRoleSelect
-                        selectKey={0}
-                        value={user.roles}
-                        onBlur={() => {}}
-                        onChange={(value) => {
-                            const e = {target: 'roles', value};
-                            this.handleChange(e);
-                        }}
-                    />
                 </div>
                 <div className='col-sm-6'>
                     { this.renderLabelInput('administrativeLink', 'Administrative Link') }
@@ -209,6 +187,20 @@ class ProfileEdition extends Component {
                         </div>
                     </div>
                 }
+                { isSuperAdmin &&
+                    <div className='col-sm-6'>
+                        <label className="floating-form">Roles</label>
+                        <MultiRoleSelect
+                            selectKey={0}
+                            value={user.roles}
+                            onBlur={() => {}}
+                            onChange={(value) => {
+                                const e = {target: {name: 'roles', value}};
+                                this.handleChange(e);
+                            }}
+                        />
+                    </div>
+                }
             </div>
         );
 
@@ -216,7 +208,12 @@ class ProfileEdition extends Component {
             <div className='row profile-edition__block'>
                 <div className='col-sm-12 text-center'>
                     <img src={user.picture} onClick={this.triggerFileUpload} className='profile__avatar' alt={user.firstname + ' ' + user.lastname}/>
-
+                    {
+                        pictureIsUploading &&
+                        <div className='profile__avatar-loader'>
+                            <img src='/assets/images/logo-background.png' alt='Brain logo background' title='Brain logo background'/>
+                        </div>
+                    }
                     <div style={{'display': 'none'}}>
                         <input className='btn btn-secondary' type='file' id='single' ref={this.fileUpload} onChange={this.onPictureChange} />
                     </div>
@@ -262,7 +259,7 @@ class ProfileEdition extends Component {
                         isOwner && ownerForm
                     }
                     {
-                        isAdmin && adminForm
+                        (isSuperAdmin || isSquadAdmin) && adminForm
                     }
                     <div className='form-inline text-center'>
                         <FormGroup className='profile-edition__call-to-action'>

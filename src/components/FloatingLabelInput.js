@@ -31,7 +31,7 @@ class FloatingLabelInput extends React.Component {
 
     render() {
         let { label, formClass, extrablock, ...props } = this.props;
-        const { isFocused } = this.state;
+        const { isFocused, value } = this.state;
         if(!formClass) formClass = "";
         return (
             <FormGroup className={formClass + ' floating-form'}>
@@ -40,6 +40,7 @@ class FloatingLabelInput extends React.Component {
                 </Label>
                 <Input
                     {...props}
+                    value={value || ''}
                     onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}

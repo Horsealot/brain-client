@@ -37,7 +37,7 @@ class ActiveSquadSelection extends Component {
 
         return (
             <div className='aside-menu__squad-selection'>
-                <div className='aside-menu__squad-selection__active' onClick={this.toggleSquadSelect}>{ activeSquadName }</div>
+                <div className='aside-menu__squad-selection__active text-center' onClick={this.toggleSquadSelect}>{ activeSquadName }</div>
                 { hasMultipleSquads && squadSelectOpened && (
                     <div className='aside-menu__squad-selection__list'>
                         <div className='aside-menu__squad-selection__list__title'>Change squad</div>

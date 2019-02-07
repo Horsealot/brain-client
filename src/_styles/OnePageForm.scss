@@ -7,7 +7,7 @@
       position: absolute;
     }
     &-bg {
-      animation: App-logo-spin infinite 20s linear;
+      @include animation(App-logo-spin infinite 20s linear);
     }
   }
   &__container {

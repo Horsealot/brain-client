@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isAdmin, isAdminOfCurrentSquad } from '../_helpers/admin-validator';
+import { isAdmin } from '../_helpers/admin-validator';
 import SuperAdminUsers from "./SuperAdminUsers";
 import SquadUsers from "./SquadUsers";
 import NotAllowed from "../components/NotAllowed";
@@ -17,8 +17,7 @@ class AdminUsers extends Component {
             isLoaded: false,
             isAllowed: false,
             data: [],
-            isAdmin: isAdmin(this.props.authentication.user),
-            isAdminOfCurrentSquad: isAdminOfCurrentSquad()
+            isAdmin: isAdmin(this.props.authentication.user)
         };
     }
 

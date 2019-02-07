@@ -8,6 +8,7 @@ export const userService = {
     logout,
     handleResponse,
     updateUser,
+    getUser,
     getActiveSquad,
     getActiveSquadName,
     switchActiveSquad,
@@ -62,6 +63,19 @@ function updateUser(user) {
     };
 
     return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions)
+        .then(handleResponse)
+        .then((data) => {
+            return data;
+        });
+}
+
+function getUser(userId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${config.apiUrl}/users/${userId}`, requestOptions)
         .then(handleResponse)
         .then((data) => {
             return data;

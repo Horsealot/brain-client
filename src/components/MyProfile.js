@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
-import { isAdmin } from "../_helpers/admin-validator";
 import {getUserPicture} from "../_helpers/user-picture";
 import {Link} from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
+import {isAdminOrSquadAdmin} from "../_helpers/admin-validator";
 
 class MyProfile extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isAdmin: isAdmin(this.props.authentication.user),
+            isAdmin: isAdminOrSquadAdmin(this.props.authentication.user),
             toggleMenu: false
         };
 
