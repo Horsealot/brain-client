@@ -23,4 +23,4 @@ export const PrivateLayoutRoute = ({ component: Component, authentication, ...re
 
         return (<FullPageLoader />);
     }} />
-)
+);

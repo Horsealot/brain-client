@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormGroup, Input, Label} from "reactstrap";
+import {FormGroup, Label} from "reactstrap";
 import TextareaAutosize from "react-textarea-autosize";
 
 class FloatingTextareaInput extends React.Component {
@@ -20,7 +20,7 @@ class FloatingTextareaInput extends React.Component {
         if(!this.state.value || !this.state.value.length) {
             this.setState({ isFocused: false });
         }
-    }
+    };
 
     handleChange = (e) => {
         const { value } = e.target;
@@ -28,7 +28,7 @@ class FloatingTextareaInput extends React.Component {
         if(typeof this.props.onChange === 'function') {
             this.props.onChange(e);
         }
-    }
+    };
 
     render() {
         let { label, formClass, extrablock, ...props } = this.props;
@@ -48,13 +48,6 @@ class FloatingTextareaInput extends React.Component {
                     onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}/>
-                {/*<Input*/}
-                    {/*{...props}*/}
-                    {/*type='textarea'*/}
-                    {/*onChange={this.handleChange}*/}
-                    {/*onFocus={this.handleFocus}*/}
-                    {/*onBlur={this.handleBlur}*/}
-                {/*/>*/}
                 {extrablock}
             </FormGroup>
         );

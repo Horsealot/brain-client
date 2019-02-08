@@ -58,7 +58,6 @@ class SquadInviteUser extends Component {
                     }
                     this.setState({invitedEmail: '', invitedMessage: ''});
                 }).catch((err) => {
-                    console.log(err);
                     if(err === 'Conflict') {
                         this.props.displayAlert(alertConstants.ERROR, userMessages.SQUAD_INVITE_USER.USER_ALREADY_IN);
                     } else {

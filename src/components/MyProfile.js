@@ -28,7 +28,7 @@ class MyProfile extends Component {
         return (
             user ?
             <div className='my-profile'>
-                <img className='my-profile__picture' onClick={this.toggleMenu} src={getUserPicture(user)}/>
+                <img className='my-profile__picture' alt={user.firstname} onClick={this.toggleMenu} src={getUserPicture(user)}/>
                 <div className={(toggleMenu ? 'open' : '') + ' my-profile__menu flex flex--column'}>
                     <Link to={`/profile/${user.id}`} className='my-profile__menu__link'>My profile</Link>
                     <Link to={`/squads`} className='my-profile__menu__link'>Team faces</Link>

@@ -17,6 +17,7 @@ import AdminUsers from "./pages/AdminUsers";
 import {bindActionCreators} from "redux";
 import {loadMyUser, logout} from "./actions/user.actions";
 import connect from "react-redux/es/connect/connect";
+import Tools from "./pages/Tools";
 
 class Main extends Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class Main extends Component {
                     <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/squads" component={Squads} authentication={this.props.authentication}/>
+                    <PrivateLayoutRoute path="/tools" component={Tools} authentication={this.props.authentication}/>
 
                     {/* Auth routes */}
                     <Route path="/password/request" component={PasswordRequestPage}/>

@@ -106,7 +106,7 @@ class Profile extends Component {
 
                 <div className='profile__actions'>
                     { isAdmin && user.administrativeLink &&
-                        <a href={user.administrativeLink} target='_blank'>
+                        <a href={user.administrativeLink} target='_blank' rel="noopener noreferrer">
                             <div className='profile__actions__action flex flex--center-center'>
                                 <div className='flex--grow'>
                                     Administrative follow up

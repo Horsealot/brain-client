@@ -11,7 +11,7 @@ class ActiveSquadSelection extends Component {
         this.state = {
             activeSquadName: userService.getActiveSquadName(),
             squadSelectOpened: false
-        }
+        };
 
         this.toggleSquadSelect = this.toggleSquadSelect.bind(this);
         this.switchSquad = this.switchSquad.bind(this);

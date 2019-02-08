@@ -71,7 +71,7 @@ class ProfileEdition extends Component {
         this.fileUpload.current.click();
     }
 
-    close(e) {
+    close() {
         this.props.editionCompleted();
     }
 
@@ -136,13 +136,13 @@ class ProfileEdition extends Component {
         )
     }
     onPictureChange = e => {
-        const files = Array.from(e.target.files)
+        const files = Array.from(e.target.files);
 
         const formData = new FormData();
 
         files.forEach((file, i) => {
             formData.append(i, file)
-        })
+        });
 
         const requestOptions = {
             method: 'POST',
@@ -156,10 +156,10 @@ class ProfileEdition extends Component {
             .then(image => {
                 this.handleChange({target: {name: 'picture', value: image.url}});
                 this.setState({pictureIsUploading: false});
-            }).catch((err) => {
+            }).catch(() => {
                 this.setState({pictureIsUploading: false});
             });
-    }
+    };
 
     render() {
         const { user, isSuperAdmin, isOwner, isSquadAdmin, pictureIsUploading } = this.state;

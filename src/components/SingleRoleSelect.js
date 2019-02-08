@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Select from 'react-select'
-import makeAnimated from 'react-select/lib/animated';
 import { multiSelectStyle } from './../_styles/_select';
 
 const rolesOptions = [
@@ -29,7 +28,7 @@ class SingleRoleSelect extends Component {
             if(option.value === value) {
                 mappedOption = option;
             }
-        })
+        });
         return mappedOption;
     }
 

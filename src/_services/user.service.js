@@ -27,7 +27,6 @@ function login(email, password) {
         .then(data => {
             setAuthToken(data.user.token);
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            console.log(getActiveSquad());
             if(data.user.squads && data.user.squads.length && !getActiveSquad()) {
                 setActiveSquad(data.user.squads[0]);
             }
@@ -91,9 +90,7 @@ function loadMyUser() {
     return fetch(`${config.apiUrl}/me`, requestOptions)
         .then(handleResponse)
         .then((data) => {
-            console.log(getActiveSquad());
             if(data.user.squads && data.user.squads.length && !getActiveSquad()) {
-                console.log(1);
                 setActiveSquad(data.user.squads[0]);
             }
             return data.user;
@@ -105,15 +102,6 @@ function logout() {
     localStorage.removeItem('userToken');
 }
 
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-}
-
 function handleResponse(response) {
     return response.text().then(text => {
         if (!response.ok) {
@@ -122,11 +110,10 @@ function handleResponse(response) {
                 logout();
             }
 
-            const error = (data && data.message) || response.statusText;
+            const error = response.statusText;
             return Promise.reject(error);
         }
-        const data = text && JSON.parse(text);
-        return data;
+        return text && JSON.parse(text);
     });
 }
 
@@ -140,7 +127,6 @@ function getActiveSquad() {
 }
 
 function setActiveSquad(newActiveSquad) {
-    console.log(newActiveSquad);
     localStorage.setItem('activeSquad', JSON.stringify(newActiveSquad));
 }
 

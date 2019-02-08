@@ -1,0 +1,62 @@
+@import './../atoms.scss';
+
+.tools {
+  &__title {
+    font-size: 25px;
+    padding-bottom: 10px;
+    .badge {
+      margin-left: 10px;
+    }
+  }
+  &__list {
+    &__tool {
+      cursor: pointer;
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+      border: solid 1px $light-black;
+      @include box-shadow(0 0 10px $light-black);
+      @include transition(all ease 0.3s);
+      &:hover {
+        @include transform(scale(1.02));
+      }
+      & + & {
+        margin-left: 20px;
+      }
+      &:hover, &:active, &:visited {
+        text-decoration: none;
+      }
+      i {
+        font-size: 40px;
+        margin-bottom: 10px;
+        &.tools__list__tool__plus {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  & + & {
+    padding-top: 50px;
+  }
+}
+
+.tool-form {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  &__form {
+    padding: 50px;
+    width: 100%;
+    max-width: 400px;
+    background: $light-black;
+    border-radius: 20px;
+    button + button {
+      margin-left: 10px;
+    }
+  }
+}

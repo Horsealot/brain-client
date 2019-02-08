@@ -48,8 +48,7 @@ class PasswordResetPage extends React.Component {
         return fetch(`${config.apiUrl}/reset`, requestOptions)
             .then((response) => {
                 this.setState({ sent: true });
-                return response.text().then((text) => {
-                    const data = text && JSON.parse(text);
+                return response.text().then(() => {
                     if (!response.ok) {
                         if (response.status === 410) {
                             this.setState({errorMessage: userMessages.PASSWORD_RESET.EXPIRED});

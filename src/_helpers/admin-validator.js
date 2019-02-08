@@ -1,3 +1,5 @@
+import {userService} from "../_services/user.service";
+
 export function isAdmin(user) {
     return user.roles && user.roles.indexOf('ADMIN') >= 0;
 }
@@ -14,13 +16,13 @@ export function isAdminOfSquad(squad) {
 }
 
 export function isAdminOfCurrentSquad(user) {
-    let activeSquad = JSON.parse(localStorage.getItem('activeSquad'));
+    let activeSquad = userService.getActiveSquad();
     if(!activeSquad || !Array.isArray(user.squads)) return false;
     let isAdmin = false;
     user.squads.forEach((squad) => {
         if(squad.id === activeSquad.id && isAdminOfSquad(squad)) {
             isAdmin = true;
         }
-    })
+    });
     return isAdmin;
 }

@@ -19,5 +19,9 @@
     "SUCCESS": "Squad has been created",
     "EXISTING": "Squad is already existing",
     "INTERNAL_ERROR": "Internal error"
+  },
+  "NEW_TOOL_FORM": {
+    "SUCCESS": "Tool has been created",
+    "INTERNAL_ERROR": "Internal error"
   }
 }

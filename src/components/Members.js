@@ -7,9 +7,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import FloatingLabelInput from "./FloatingLabelInput";
 import { validateEmail } from "../_helpers/form-validator";
 import {Link} from "react-router-dom";
-import Select from 'react-select'
-import makeAnimated from 'react-select/lib/animated';
-import { multiSelectStyle } from './../_styles/_select';
 import SectionTitle from "./SectionTitle";
 import SquadSelect from "./SquadSelect";
 import MultiRoleSelect from "./MultiRoleSelect";
@@ -83,7 +80,7 @@ class Members extends Component {
 
         return fetch(`${config.apiUrl}/users/${userToUpdate.id}`, requestOptions)
             .then(userService.handleResponse)
-            .then((data) => {
+            .then(() => {
                 const users = this.state.users.slice();
                 users[index].modified = false;
                 this.setState({users});

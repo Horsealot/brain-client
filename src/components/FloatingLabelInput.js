@@ -19,7 +19,7 @@ class FloatingLabelInput extends React.Component {
         if(!this.state.value || !this.state.value.length) {
             this.setState({ isFocused: false });
         }
-    }
+    };
 
     handleChange = (e) => {
         const { value } = e.target;
@@ -27,7 +27,7 @@ class FloatingLabelInput extends React.Component {
         if(typeof this.props.onChange === 'function') {
             this.props.onChange(e);
         }
-    }
+    };
 
     render() {
         let { label, formClass, extrablock, ...props } = this.props;

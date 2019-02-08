@@ -29,7 +29,7 @@ class Squads extends Component {
                 const squadMember = squads[squad][i];
                 squadMembers.push(
                     <Link to={`/profile/${squadMember.id}`} key={`${squad}.${squadMember.id}`} className='squads__members__member flex flex--column flex--center-center'>
-                        <img src={getUserPicture(squadMember)} className='squads__members__member__picture'/>
+                        <img src={getUserPicture(squadMember)} alt={squadMember.firstname} className='squads__members__member__picture'/>
                         <div className='squads__members__member__name'>{ squadMember.firstname }</div>
                         <div className='squads__members__member__job'>{ squadMember.jobTitle }</div>
                     </Link>
@@ -45,7 +45,7 @@ class Squads extends Component {
             );
         }
         return table;
-    }
+    };
 
     render() {
         return (

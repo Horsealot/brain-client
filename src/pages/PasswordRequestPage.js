@@ -48,7 +48,7 @@ class PasswordRequestPage extends React.Component {
 
         return fetch(`${config.apiUrl}/reset/request`, requestOptions)
             .then((response) => {
-                return response.text().then((text) => {
+                return response.text().then(() => {
                     if (!response.ok) {
                         if (response.status === 409) {
                             this.setState({errorMessage: userMessages.PASSWORD_REQUEST.EXISTING});

@@ -8,7 +8,7 @@ class Alerts extends Component {
         return (
             <div className='alerts'>
                 {
-                    this.props.alert.alerts.map((alert, index) => (
+                    this.props.alert.alerts.map((alert) => (
                         <div key={alert.id} className={'alert ' + (alert.status === alertConstants.SUCCESS ? 'alert-success' : 'alert-error')}>
                             {alert.message}
                         </div>

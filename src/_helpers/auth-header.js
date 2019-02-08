@@ -1,3 +1,5 @@
+import {userService} from "../_services/user.service";
+
 export default function authHeader() {
     // return authorization header with jwt token
     const jwtToken = getAuthToken();
@@ -19,7 +21,8 @@ export function squadHeader(squadId) {
     if(squadId) {
         return { 'Brain-squad': squadId };
     }
-    let activeSquad = JSON.parse(localStorage.getItem('activeSquad'));
+
+    let activeSquad = userService.getActiveSquad();
 
     if (activeSquad && activeSquad.id) {
         return { 'Brain-squad': activeSquad.id };
