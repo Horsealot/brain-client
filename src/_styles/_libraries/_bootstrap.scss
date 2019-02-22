@@ -64,7 +64,7 @@ label {
 .btn {
   &-secondary {
     background: none;
-    border: 2px white;
+    border: solid 2px white;
     padding: 6px 30px;
     border-radius: 10px;
     @include transition(box-shadow ease 0.6s);

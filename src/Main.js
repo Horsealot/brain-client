@@ -18,6 +18,7 @@ import {bindActionCreators} from "redux";
 import {loadMyUser, logout} from "./actions/user.actions";
 import connect from "react-redux/es/connect/connect";
 import Tools from "./pages/Tools";
+import Dashboards from "./pages/Dashboards";
 
 class Main extends Component {
     constructor(props) {
@@ -36,6 +37,7 @@ class Main extends Component {
             <Router history={history}>
                 <div className="sans-serif">
                     <PrivateLayoutRoute path="/" exact component={Dashboard} authentication={this.props.authentication}/>
+                    <PrivateLayoutRoute path="/dashboards/:id" exact component={Dashboards} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute exact path="/profile/:id" component={Profile} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>

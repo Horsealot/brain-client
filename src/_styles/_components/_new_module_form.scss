@@ -1,0 +1,21 @@
+@import './../atoms.scss';
+
+.new-module-form {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  @include transform(translate3d(-50%, -50%, 0));
+  padding: 30px;
+  @include box-shadow(0 0 10px $light-black);
+  background: $light-black;
+  border-radius: 10px;
+  &__backdrop {
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

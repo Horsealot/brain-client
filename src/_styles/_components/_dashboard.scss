@@ -1,0 +1,16 @@
+@import './../atoms.scss';
+
+.dashboard {
+  &-module {
+    position: relative;
+    margin-top: 60px;
+    &__remove {
+      cursor: pointer;
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      color: red;
+      font-weight: 800;
+    }
+  }
+}
