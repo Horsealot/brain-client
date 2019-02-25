@@ -14,6 +14,10 @@ class DashboardModule extends Component {
         this.props.onDelete(this.props.module.id);
     }
 
+    editModule() {
+        this.props.onDelete(this.props.module.id);
+    }
+
     renderComponent() {
         switch (this.props.module.type) {
             case 'chart':
@@ -29,9 +33,13 @@ class DashboardModule extends Component {
 
     render() {
         const { module } = this.props;
-        return (<div className={'dashboard-module module-' + module.width}>
+        return (
+        <div className={'dashboard-module module-' + module.width}>
             <div className='dashboard-module__remove' onClick={this.deleteModule}>X</div>
-            {this.renderComponent()}
+            <h5 className='text-center'>{module.title}</h5>
+            <div>
+                {this.renderComponent()}
+            </div>
         </div>);
     }
 }

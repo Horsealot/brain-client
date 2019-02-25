@@ -17,9 +17,18 @@ class ChartModule extends Component {
         let options = {
             legend: {
                 display: false,
+            },
+            maintainAspectRatio: false,
+            responsive:true,
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        display: false //this will remove only the label
+                    }
+                }]
             }
         };
-        return <Line data={data} options={options} />;
+        return <Line data={data} options={options} height={150}/>;
     }
 }
 

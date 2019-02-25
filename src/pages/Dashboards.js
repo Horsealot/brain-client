@@ -72,8 +72,10 @@ class Dashboard extends Component {
                             <DashboardModule key={module.id} module={module} onDelete={this.onDeleteModule}/>
                         ))
                     }
+                    <div className='dashboard__new'>
+                        <Button onClick={this.toggleNewModuleForm}>Add new module</Button>
+                    </div>
                 </div>
-                <Button onClick={this.toggleNewModuleForm}>Add new module</Button>
                 {
                     addModule &&
                         <NewModuleForm
