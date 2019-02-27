@@ -1,9 +1,23 @@
+@import './../atoms.scss';
+
 .loader-fullpage {
   position: absolute;
   top: 0;
   left: $menu-width;
   right: 0;
   bottom: 0;
+  img {
+    max-width: 100px;
+  }
+}
+.loader_overlay-fullpage {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: $menu-width;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.2);
   img {
     max-width: 100px;
   }

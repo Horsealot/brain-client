@@ -19,6 +19,8 @@ import {loadMyUser, logout} from "./actions/user.actions";
 import connect from "react-redux/es/connect/connect";
 import Tools from "./pages/Tools";
 import Dashboards from "./pages/Dashboards";
+import Okrs from "./pages/Okrs";
+import PastOkrs from "./pages/PastOkrs";
 
 class Main extends Component {
     constructor(props) {
@@ -40,6 +42,8 @@ class Main extends Component {
                     <PrivateLayoutRoute path="/dashboards/:id" exact component={Dashboards} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute exact path="/profile/:id" component={Profile} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} authentication={this.props.authentication}/>
+                    <PrivateLayoutRoute exact path="/okr" component={Okrs} authentication={this.props.authentication}/>
+                    <PrivateLayoutRoute path="/okr/history" component={PastOkrs} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/squads" component={Squads} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/tools" component={Tools} authentication={this.props.authentication}/>

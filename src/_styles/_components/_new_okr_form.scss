@@ -1,0 +1,15 @@
+@import './../atoms.scss';
+
+.new-okr-form {
+  &__title {
+    height: 200px;
+    width: 200px;
+    @include box-shadow(0 0 10px $light-black);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  &__picture {
+    max-width: 200px;
+    margin: 5px 0 10px 0;
+  }
+}

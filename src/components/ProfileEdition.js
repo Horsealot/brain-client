@@ -18,6 +18,7 @@ import connect from "react-redux/es/connect/connect";
 import {userService} from "../_services/user.service";
 
 import { alertConstants } from './../_constants/alert.constants';
+import {uploadService} from "../_services/uploard.service";
 
 class ProfileEdition extends Component {
     constructor(props) {
@@ -144,21 +145,15 @@ class ProfileEdition extends Component {
             formData.append(i, file)
         });
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { ...authHeader()},
-            body: formData
-        };
-
         this.setState({pictureIsUploading: true});
-        fetch(`${config.apiUrl}/uploads/picture`, requestOptions)
-            .then(res => res.json())
+
+        uploadService.uploadProfilePicture(formData)
             .then(image => {
                 this.handleChange({target: {name: 'picture', value: image.url}});
                 this.setState({pictureIsUploading: false});
             }).catch(() => {
-                this.setState({pictureIsUploading: false});
-            });
+            this.setState({pictureIsUploading: false});
+        });
     };
 
     render() {

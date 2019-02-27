@@ -10,7 +10,7 @@ class Layout extends Component {
             <div className="aside-menu flex flex--start-center flex--column">
                 <ActiveSquadSelection />
                 <MenuLink targetUrl="/" icon='brainicon-dashboard' caption="Dashboard"/>
-                <MenuLink targetUrl="/okrs" icon='brainicon-okr' caption="OKR's"/>
+                <MenuLink targetUrl="/okr" icon='brainicon-okr' caption="OKR's"/>
                 <MenuLink targetUrl="/todo" icon='brainicon-todo' caption="Week todo"/>
                 <MenuLink targetUrl="/tools" icon='brainicon-tools' caption="Tools"/>
                 <div className="flex--grow"></div>

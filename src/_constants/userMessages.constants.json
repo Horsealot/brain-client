@@ -23,5 +23,10 @@
   "NEW_TOOL_FORM": {
     "SUCCESS": "Tool has been created",
     "INTERNAL_ERROR": "Internal error"
+  },
+  "NEW_OKR_FORM": {
+    "SUCCESS": "Okr has been create",
+    "EXISTING": "OKR is already existing",
+    "INTERNAL_ERROR": "Internal error"
   }
 }
