@@ -10,6 +10,7 @@ import './../_styles/_components/_okrs.scss';
 import connect from "react-redux/es/connect/connect";
 import {isAdmin, isAdminOfCurrentSquad} from "../_helpers/admin-validator";
 import {Link} from "react-router-dom";
+import UserGoals from "../components/UserGoals";
 
 class Okrs extends Component {
     constructor(props) {
@@ -128,6 +129,7 @@ class Okrs extends Component {
                         </div>
                     }
                 </div>
+                <UserGoals />
             </Container>
         );
     }

@@ -12,7 +12,7 @@ import {uploadService} from "../_services/uploard.service";
 import FullPageLoaderOverlay from "./FullPageLoaderOverlay";
 import {okrService} from "../_services/okr.service";
 
-class NewModuleForm extends Component {
+class NewOkrForm extends Component {
     constructor(props) {
         super(props);
 
@@ -189,5 +189,5 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ displayAlert }, dispatch);
 }
 
-const connectedNewModuleForm = connect(null, mapDispatchToProps)(NewModuleForm);
-export default connectedNewModuleForm;
+const connectedNewOkrForm = connect(null, mapDispatchToProps)(NewOkrForm);
+export default connectedNewOkrForm;
