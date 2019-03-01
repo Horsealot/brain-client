@@ -1,3 +1,16 @@
 $menu-width: 100px;
 
+// Media
+$screen-phone: 640px;
+$screen-tablet: 768px;
+$screen-desktop: 992px;
+$media-extra-mobile: "max-width: 350px";
+$media-mobile: "max-width: 767px";
+//$media-mobile: "max-width: 640px";
+$media-tablet: "max-width: #{$screen-desktop}";
+$media-tablet-plus: "min-width: #{$screen-tablet}";
+$media-tablet-portrait: "max-width: #{$screen-tablet}";
+$media-desktop: "min-width: #{$screen-desktop}";
+$media-not-mobile: "min-width: 767px";
+
 @import './colors';

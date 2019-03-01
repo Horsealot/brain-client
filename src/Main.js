@@ -21,6 +21,7 @@ import Tools from "./pages/Tools";
 import Dashboards from "./pages/Dashboards";
 import Okrs from "./pages/Okrs";
 import PastOkrs from "./pages/PastOkrs";
+import FoodForThought from "./pages/FoodForThought";
 
 class Main extends Component {
     constructor(props) {
@@ -47,6 +48,7 @@ class Main extends Component {
                     <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/squads" component={Squads} authentication={this.props.authentication}/>
                     <PrivateLayoutRoute path="/tools" component={Tools} authentication={this.props.authentication}/>
+                    <PrivateLayoutRoute path="/food-for-thought" component={FoodForThought} authentication={this.props.authentication}/>
 
                     {/* Auth routes */}
                     <Route path="/password/request" component={PasswordRequestPage}/>

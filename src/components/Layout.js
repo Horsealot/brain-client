@@ -15,7 +15,7 @@ class Layout extends Component {
                 <MenuLink targetUrl="/tools" icon='brainicon-tools' caption="Tools"/>
                 <div className="flex--grow"></div>
                 <MenuLink targetUrl="/how-to" icon='brainicon-tools' caption="How to"/>
-                <MenuLink targetUrl="/food" icon='brainicon-tools' caption="Food for though"/>
+                <MenuLink targetUrl="/food-for-thought" icon='brainicon-tools' caption="Food for though"/>
             </div>
         );
     }
