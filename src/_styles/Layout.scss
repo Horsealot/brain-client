@@ -10,6 +10,26 @@
   @include box-shadow(0 0 10px $light-black);
   background: $light-black;
   padding-top: 20px;
+  @media ($media-mobile) {
+    width: 200px;
+    @include transition(all ease 0.3s);
+    @include transform(translateX(-100%));
+    &.aside-menu--opened {
+      @include transform(translateX(0));
+    }
+  }
+  &__burger {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px 20px;
+    font-size: 20px;
+    visibility: hidden;
+    @media ($media-mobile) {
+      visibility: visible;
+    }
+  }
   &__element {
     position: relative;
     font-size: 11px;
@@ -59,6 +79,11 @@
       width: 180px;
       border-radius: 3px;
       @include box-shadow(0 0 2px white);
+      @media ($media-mobile) {
+        right: 10px;
+        top: 50px;
+        @include transform(translateX(0));
+      }
       &__title {
         color: $black;
         font-size: 12px;
@@ -89,4 +114,7 @@
 .main-container {
   margin-left: $menu-width;
   margin-top: 50px;
+  @media ($media-mobile) {
+    margin-left: 0;
+  }
 }

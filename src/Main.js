@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from "react-router-dom";
-import { Route } from "react-router";
+import {Route, Switch} from "react-router";
 import Profile from "./components/Profile";
 
 import { history } from './store';
@@ -22,6 +22,7 @@ import Dashboards from "./pages/Dashboards";
 import Okrs from "./pages/Okrs";
 import PastOkrs from "./pages/PastOkrs";
 import FoodForThought from "./pages/FoodForThought";
+import NotFound from "./components/NotFound";
 
 class Main extends Component {
     constructor(props) {
@@ -39,22 +40,26 @@ class Main extends Component {
         return (
             <Router history={history}>
                 <div className="sans-serif">
-                    <PrivateLayoutRoute path="/" exact component={Dashboard} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/dashboards/:id" exact component={Dashboards} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute exact path="/profile/:id" component={Profile} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute exact path="/okr" component={Okrs} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/okr/history" component={PastOkrs} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/squads" component={Squads} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/tools" component={Tools} authentication={this.props.authentication}/>
-                    <PrivateLayoutRoute path="/food-for-thought" component={FoodForThought} authentication={this.props.authentication}/>
+                    <Switch>
+                        <PrivateLayoutRoute path="/" exact component={Dashboards} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/dashboards/:id" exact component={Dashboards} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute exact path="/profile/:id" component={Profile} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/profile/:id/edition" component={ProfileEdition} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute exact path="/okr" component={Okrs} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/okr/history" component={PastOkrs} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/squads" component={Squads} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/tools" component={Tools} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/food-for-thought" component={FoodForThought} authentication={this.props.authentication}/>
 
-                    {/* Auth routes */}
-                    <Route path="/password/request" component={PasswordRequestPage}/>
-                    <Route path="/password/reset/:token" component={PasswordResetPage}/>
-                    <Route path="/login" component={LoginPage}/>
-                    <Route path="/signup/:token" component={SignupPage}/>
+                        {/* Auth routes */}
+                        <Route path="/password/request" component={PasswordRequestPage}/>
+                        <Route path="/password/reset/:token" component={PasswordResetPage}/>
+                        <Route path="/login" component={LoginPage}/>
+                        <Route path="/signup/:token" component={SignupPage}/>
+
+                        <PrivateLayoutRoute component={NotFound} authentication={this.props.authentication}/>
+                    </Switch>
                     <Alerts/>
                 </div>
             </Router>

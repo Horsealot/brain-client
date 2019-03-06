@@ -24,12 +24,22 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        dashboardService.getDashboard(this.props.match.params.id).then((data) => {
-            if(!Array.isArray(data.dashboard.modules)) {
-                data.dashboard.modules = [];
-            }
-            this.setState({dashboard: data.dashboard, loaded: true});
-        });
+        if(this.props.match.params.id) {
+            dashboardService.getDashboard(this.props.match.params.id).then((data) => {
+                if(!Array.isArray(data.dashboard.modules)) {
+                    data.dashboard.modules = [];
+                }
+                this.setState({dashboard: data.dashboard, loaded: true});
+            });
+        } else {
+
+            dashboardService.getMyDashboard().then((data) => {
+                if(!Array.isArray(data.dashboard.modules)) {
+                    data.dashboard.modules = [];
+                }
+                this.setState({dashboard: data.dashboard, loaded: true});
+            });
+        }
         dashboardService.getAvailableKpis().then((data) => {
             this.setState({availableKpis: data.kpis});
         });

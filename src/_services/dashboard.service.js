@@ -1,5 +1,5 @@
 import config from './../config';
-import authHeader from './../_helpers/auth-header';
+import authHeader, {squadHeader} from './../_helpers/auth-header';
 import {setAuthToken} from "../_helpers/auth-header";
 import {userService} from "./user.service";
 
@@ -15,7 +15,7 @@ export const dashboardService = {
 function getMyDashboard() {
     const requestOptions = {
         method: 'GET',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' }
+        headers: { ...authHeader(), ...squadHeader(), 'Content-Type': 'application/json' }
     };
 
     return fetch(`${config.apiUrl}/dashboards/my`, requestOptions)
