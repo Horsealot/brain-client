@@ -1,0 +1,67 @@
+@import './../atoms.scss';
+
+.how-to {
+  position: relative;
+  margin: 40px 0;
+  & + & {
+    margin-top: 80px;
+  }
+  & + & &__title {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      top: -35px;
+    }
+  }
+  &__content {
+    blockquote {
+      font-style: italic;
+      padding: 5px;
+      background: $light-black;
+      font-size: 15px;
+      border-radius: 5px;
+      p {
+        margin-bottom: 0;
+      }
+      p + p {
+        margin-top: 1rem;
+      }
+    }
+  }
+  &__moderation {
+    padding: 5px;
+    position: absolute;
+    bottom: -15px;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    background: $light-black;
+    border-radius: 5px;
+    @include transition(all ease 0.3s);
+    @include transform(translateX(25px));
+    i {
+      font-size: 20px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    i + i {
+      margin-left: 10px;
+    }
+    &__validate {
+      color: green;
+    }
+    &__remove {
+      color: red;
+    }
+    &.moderation-visible {
+      visibility: visible;
+      opacity: 1;
+      @include transform(translateX(0));
+    }
+  }
+}

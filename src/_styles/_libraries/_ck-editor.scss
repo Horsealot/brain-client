@@ -1,0 +1,19 @@
+@import './../atoms.scss';
+
+.ck {
+  & &-toolbar {
+    background: $black;
+    button {
+      color: white;
+      &:hover {
+        background: $light-black !important;
+      }
+    }
+  }
+  &-toolbar &-dropdown__panel &-list {
+    background: $light-black;
+  }
+  &-editor__main#{&} > &-editor__editable {
+    background: $black;
+  }
+}

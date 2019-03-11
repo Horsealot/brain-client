@@ -28,5 +28,9 @@
     "SUCCESS": "Okr has been create",
     "EXISTING": "OKR is already existing",
     "INTERNAL_ERROR": "Internal error"
+  },
+  "HOW_TO": {
+    "SUCCESS": "How to has been updated",
+    "INTERNAL_ERROR": "Internal error"
   }
 }
