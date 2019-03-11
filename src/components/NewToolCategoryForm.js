@@ -62,7 +62,7 @@ class NewToolCategoryForm extends Component {
                 <Row form>
                     <Col md={{ size: 8, offset: 2}}>
                         <FormGroup>
-                            <h5>Create new squad</h5>
+                            <h5>Create new Tool category</h5>
                         </FormGroup>
                     </Col>
                     <Col md={{ size: 5, offset: 2}}>

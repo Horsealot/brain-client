@@ -2,18 +2,18 @@
 
 .ck {
   & &-toolbar {
-    background: $black;
+    background: $black !important;
     button {
-      color: white;
+      color: white !important;
       &:hover {
         background: $light-black !important;
       }
     }
   }
   &-toolbar &-dropdown__panel &-list {
-    background: $light-black;
+    background: $light-black !important;
   }
   &-editor__main#{&} > &-editor__editable {
-    background: $black;
+    background: $black !important;
   }
 }
