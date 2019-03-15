@@ -5,7 +5,8 @@ import {userService} from "./user.service";
 export const squadService = {
     removeUserFromSquad,
     updateUserRoleInSquad,
-    getSquads
+    getSquads,
+    updateAsanaProjectId
 };
 
 function getSquads() {
@@ -36,5 +37,19 @@ function updateUserRoleInSquad(userId, squadId, role) {
     };
 
     return fetch(`${config.apiUrl}/users/${userId}/squads`, requestOptions)
+        .then(userService.handleResponse);
+}
+
+function updateAsanaProjectId(projectId) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({squad: {asanaProjectId: projectId}})
+    };
+
+
+    let activeSquad = userService.getActiveSquad();
+
+    return fetch(`${config.apiUrl}/squads/${activeSquad.id}`, requestOptions)
         .then(userService.handleResponse);
 }

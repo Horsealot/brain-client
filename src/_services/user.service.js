@@ -10,6 +10,7 @@ export const userService = {
     updateUser,
     getUser,
     getActiveSquad,
+    setActiveSquad,
     getActiveSquadName,
     switchActiveSquad,
     loadMyUser

@@ -32,5 +32,9 @@
   "HOW_TO": {
     "SUCCESS": "How to has been updated",
     "INTERNAL_ERROR": "Internal error"
+  },
+  "SQUAD_ASANA_PROJECT_FORM": {
+    "SUCCESS": "Project id has been updated",
+    "INTERNAL_ERROR": "Internal error"
   }
 }

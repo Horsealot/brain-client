@@ -6,18 +6,32 @@ import './../_styles/_components/_todo.scss';
 import FullPageLoader from "../components/FullPageLoader";
 import Task from "../components/Task";
 import FullPageError from "../components/FullPageError";
+import SquadAsanaProjectForm from "../components/SquadAsanaProjectForm";
+import {Button} from "reactstrap";
+import {userService} from "../_services/user.service";
+import {isAdminOrSquadAdmin} from "../_helpers/admin-validator";
+import connect from "react-redux/es/connect/connect";
 
 class Todo extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            isAdmin: isAdminOrSquadAdmin(this.props.authentication.user),
+            inEdition: false,
             loaded: false,
             tasks: null
         };
+        this.toggleEditionModal = this.toggleEditionModal.bind(this);
+        this.editProjectId = this.editProjectId.bind(this);
+        this.loadTodo = this.loadTodo.bind(this);
     }
 
     componentDidMount() {
+        this.loadTodo();
+    }
+
+    loadTodo() {
         todoService.getTodo().then((data) => {
             this.setState({tasks: data.tasks, loaded: true});
         }).catch((err) => {
@@ -25,14 +39,40 @@ class Todo extends Component {
         });
     }
 
+    toggleEditionModal() {
+        this.setState({inEdition: !this.state.inEdition});
+    }
+
+    editProjectId(newProjectId) {
+        this.toggleEditionModal();
+        if(newProjectId) {
+            let activeSquad = userService.getActiveSquad();
+            activeSquad.asanaProjectId = newProjectId;
+            userService.setActiveSquad(activeSquad);
+            this.setState({loaded: false, tasks: null});
+            this.loadTodo();
+        }
+    }
+
     render() {
-        const {loaded, tasks, error} = this.state;
+        const {loaded, tasks, inEdition, isAdmin, error} = this.state;
+
+        const editionPart = isAdmin ? (
+            <>
+                <SquadAsanaProjectForm close={this.toggleEditionModal} onUpdate={(data) => {this.editProjectId(data);}} opened={inEdition}/>
+                <Button onClick={this.toggleEditionModal}>Edit</Button>
+            </>
+        ) : <></>;
+
         if(!loaded) {
             return (<FullPageLoader />);
         }
         if(!tasks) {
             return (
-                <FullPageError content={`${error.error}: ${error.details}`}/>
+                <>
+                    <FullPageError content={`${error.error}: ${error.details}`}/>
+                    {editionPart}
+                </>
             )
         }
         return (
@@ -64,9 +104,19 @@ class Todo extends Component {
                         )}
                     </div>
                 </div>
+                {editionPart}
             </div>
         );
     }
 }
 
-export default Todo;
+
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication
+    };
+}
+
+const connectedTodo = connect(mapStateToProps, null)(Todo);
+export default connectedTodo;
