@@ -1,6 +1,5 @@
 import config from './../config';
 import authHeader, {squadHeader} from './../_helpers/auth-header';
-import {setAuthToken} from "../_helpers/auth-header";
 import {userService} from "./user.service";
 
 export const dashboardService = {

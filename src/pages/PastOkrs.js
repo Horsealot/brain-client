@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {Container} from "reactstrap";
-import SectionTitle from "../components/SectionTitle";
 import {okrService} from "../_services/okr.service";
 
 import FullPageLoader from "../components/FullPageLoader";
 import Okr from "../components/Okr";
-import NewOkrForm from "../components/NewOkrForm";
 
 import './../_styles/_components/_okrs.scss';
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Container, FormGroup, Input, Label} from "reactstrap";
+import {Container, Input} from "reactstrap";
 import {goalService} from "../_services/goal.service";
 
 import './../_styles/_components/_user_goals.scss';
 import connect from "react-redux/es/connect/connect";
 import {getUserPicture} from "../_helpers/user-picture";
-import FloatingLabelInput from "./FloatingLabelInput";
+import FullPageLoader from "./FullPageLoader";
 
 class UserGoals extends Component {
     constructor(props) {
@@ -129,9 +129,9 @@ class UserGoals extends Component {
     render() {
         const { loaded, userGoals, newGoal } = this.state;
         const { user } = this.props.authentication;
-        // if(!loaded) {
-        //     return (<FullPageLoader />);
-        // }
+        if(!loaded) {
+            return (<FullPageLoader />);
+        }
         return (
             <Container onClick={this.resetFocus}>
                 <h3>What I need to improve personaly and how</h3>

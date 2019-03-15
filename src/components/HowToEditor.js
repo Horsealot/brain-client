@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import CKEditor from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-balloon';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-inline';
 
 import './../_styles/_libraries/_ck-editor.scss';
 
 class HowToEditor extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const {content} = this.props;

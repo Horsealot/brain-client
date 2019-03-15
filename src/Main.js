@@ -8,7 +8,6 @@ import {LoginPage} from "./pages/LoginPage";
 import {SignupPage} from "./pages/SignupPage";
 import PasswordRequestPage from "./pages/PasswordRequestPage";
 import PasswordResetPage from "./pages/PasswordResetPage";
-import Dashboard from "./components/Dashboard";
 import {PrivateLayoutRoute} from "./components/PrivateLayoutRoute";
 import ProfileEdition from "./components/ProfileEdition";
 import Squads from "./components/Squads";
