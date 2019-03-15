@@ -24,6 +24,7 @@ import PastOkrs from "./pages/PastOkrs";
 import FoodForThought from "./pages/FoodForThought";
 import NotFound from "./components/NotFound";
 import HowTos from "./pages/HowTos";
+import Todo from "./pages/Todo";
 
 class Main extends Component {
     constructor(props) {
@@ -51,6 +52,7 @@ class Main extends Component {
                         <PrivateLayoutRoute path="/admin" component={AdminUsers} authentication={this.props.authentication}/>
                         <PrivateLayoutRoute path="/squads" component={Squads} authentication={this.props.authentication}/>
                         <PrivateLayoutRoute path="/tools" component={Tools} authentication={this.props.authentication}/>
+                        <PrivateLayoutRoute path="/todo" component={Todo} authentication={this.props.authentication}/>
                         <PrivateLayoutRoute path="/how-to" component={HowTos} authentication={this.props.authentication}/>
                         <PrivateLayoutRoute path="/food-for-thought" component={FoodForThought} authentication={this.props.authentication}/>
 

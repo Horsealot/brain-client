@@ -103,3 +103,12 @@ label {
     background: $primary;
   }
 }
+
+.container {
+  &-large {
+    padding: 0 40px;
+    @media($media-mobile) {
+      padding: 0 5px;
+    }
+  }
+}

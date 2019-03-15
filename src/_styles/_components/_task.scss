@@ -1,0 +1,20 @@
+@import './../atoms.scss';
+
+.task {
+  padding: 10px;
+  background: #222;
+  margin: 10px 5px;
+  border-radius: 10px;
+  @include transition(all ease 0.2s);
+  &__name {
+    font-size: 15px;
+    padding: 5px 0 10px 0;
+  }
+  &__assignee {
+    font-size: 10px;
+    text-align: right;
+  }
+  &:hover {
+    @include box-shadow(0 0 10px $light-black);
+  }
+}

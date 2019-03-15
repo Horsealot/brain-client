@@ -111,7 +111,12 @@ function handleResponse(response) {
             }
 
             const error = response.statusText;
-            return Promise.reject(error);
+            try {
+                const body = JSON.parse(text);
+                return Promise.reject({error, details: body.errors});
+            } catch(e) {
+                return Promise.reject({error});
+            }
         }
         return text && JSON.parse(text);
     });
