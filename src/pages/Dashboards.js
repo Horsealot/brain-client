@@ -5,16 +5,20 @@ import DashboardModule from "../components/DashboardModule";
 import NewModuleForm from "../components/NewModuleForm";
 import {dashboardService} from "../_services/dashboard.service";
 import './../_styles/_components/_dashboard.scss';
+import {isAdminOrSquadAdmin} from "../_helpers/admin-validator";
+import connect from "react-redux/es/connect/connect";
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            isAdmin: isAdminOrSquadAdmin(this.props.authentication.user),
             loaded: false,
             modified: false,
             addModule: false,
             dashboard: null,
+            editedModule: null,
             availableKpis: []
         };
 
@@ -58,18 +62,28 @@ class Dashboard extends Component {
         this.setState({dashboard});
     }
 
-    toggleNewModuleForm() {
-        this.setState({addModule: !this.state.addModule});
+    toggleNewModuleForm(module) {
+        this.setState({editedModule: module, addModule: !this.state.addModule});
     }
 
     onNewModule(module) {
         let dashboard = {...this.state.dashboard};
         if(!module.stats) module.stats = [];
-        dashboard.modules.push(module);
+        let isANewModule = false;
+        for(let i = 0; i < dashboard.modules.length; i++) {
+            if(module.id === dashboard.modules[i].id) {
+                isANewModule = true;
+                dashboard.modules[i] = module;
+            }
+        }
+        if(!isANewModule) {
+            dashboard.modules.push(module);
+        }
+        this.setState({dashboard});
     }
 
     render() {
-        const { dashboard, addModule } = this.state;
+        const { dashboard, addModule, isAdmin, editedModule } = this.state;
         if(!this.state.loaded) {
             return (<FullPageLoader />);
         }
@@ -79,16 +93,19 @@ class Dashboard extends Component {
                 <div className='dashboard'>
                     {
                         dashboard.modules.map((module) => (
-                            <DashboardModule key={module.id} module={module} onDelete={this.onDeleteModule}/>
+                            <DashboardModule editable={isAdmin} key={module.id} module={module} onDelete={this.onDeleteModule} onEdit={() => this.toggleNewModuleForm(module)}/>
                         ))
                     }
-                    <div className='dashboard__new'>
-                        <Button onClick={this.toggleNewModuleForm}>Add new module</Button>
-                    </div>
+                    { isAdmin &&
+                        <div className='dashboard__new'>
+                            <Button onClick={this.toggleNewModuleForm}>Add new module</Button>
+                        </div>
+                    }
                 </div>
                 {
                     addModule &&
                         <NewModuleForm
+                            editedModule={editedModule}
                             onNewModule={(module) => this.onNewModule(module)}
                             close={this.toggleNewModuleForm}
                             availableKpis={this.state.availableKpis}
@@ -99,4 +116,12 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+function mapStateToProps(state) {
+    const { authentication } = state;
+    return {
+        authentication
+    };
+}
+
+const connectedDashboard = connect(mapStateToProps, null)(Dashboard);
+export default connectedDashboard;

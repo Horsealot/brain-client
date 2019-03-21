@@ -18,27 +18,30 @@
       }
     }
 
-    &__remove {
+    &__moderate {
       position: absolute;
-      background: $lighter-black;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      text-align: center;
-      padding-top: 3px;
-      color: white;
-      cursor: pointer;
       top: -20px;
       right: 20px;
-      font-weight: 800;
+      text-align: center;
       visibility: hidden;
       opacity: 0;
       @include transition(all 0.3s);
-      &:hover {
-        @include box-shadow(0 0 6px 3px $primary);
+      &-edit, &-remove {
+        background: $lighter-black;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        padding-top: 3px;
+        color: white;
+        cursor: pointer;
+        font-weight: 800;
+        @include transition(all 0.3s);
+        &:hover {
+          @include box-shadow(0 0 6px 3px $primary);
+        }
       }
     }
-    &:hover &__remove {
+    &:hover &__moderate {
       opacity: 1;
       visibility: visible;
     }

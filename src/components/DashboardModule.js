@@ -8,6 +8,7 @@ class DashboardModule extends Component {
         super(props);
 
         this.deleteModule = this.deleteModule.bind(this);
+        this.editModule = this.editModule.bind(this);
     }
 
     deleteModule() {
@@ -15,7 +16,7 @@ class DashboardModule extends Component {
     }
 
     editModule() {
-        this.props.onDelete(this.props.module.id);
+        this.props.onEdit(this.props.module.id);
     }
 
     renderComponent() {
@@ -35,7 +36,14 @@ class DashboardModule extends Component {
         const { module } = this.props;
         return (
         <div className={'dashboard-module module-' + module.width}>
-            <div className='dashboard-module__remove' onClick={this.deleteModule}>X</div>
+            {this.props.editable &&
+                <div className='dashboard-module__moderate flex flex--center-center'>
+                    <div className='dashboard-module__moderate-edit' onClick={this.editModule}>
+                        <i className="fas fa-edit"></i>
+                    </div>
+                    <div className='dashboard-module__moderate-remove' onClick={this.deleteModule}>X</div>
+                </div>
+            }
             <h5 className='text-center'>{module.title}</h5>
             <div>
                 {this.renderComponent()}

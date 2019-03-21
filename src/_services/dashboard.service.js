@@ -7,6 +7,7 @@ export const dashboardService = {
     getDashboard,
     getAvailableKpis,
     addModuleToDashboard,
+    updateModule,
     removeModuleToDashboard
 };
 
@@ -45,6 +46,20 @@ function addModuleToDashboard(id, module) {
     };
 
     return fetch(`${config.apiUrl}/dashboards/${id}/module`, requestOptions)
+        .then(userService.handleResponse)
+        .then((data) => {
+            return data;
+        });
+}
+
+function updateModule(id, module) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({module})
+    };
+
+    return fetch(`${config.apiUrl}/dashboards/${id}/module/${module.id}`, requestOptions)
         .then(userService.handleResponse)
         .then((data) => {
             return data;

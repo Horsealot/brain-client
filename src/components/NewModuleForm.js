@@ -21,11 +21,18 @@ class NewModuleForm extends Component {
     constructor(props) {
         super(props);
 
+        let module = (this.props.editedModule && this.props.editedModule.type) ? this.props.editedModule : {
+            type: null,
+            properties: {}
+        };
+        console.log(module);
+
         this.state = {
-            module: {
-                type: null,
-                properties: {}
-            },
+            module,
+            // module: {
+            //     type: null,
+            //     properties: {}
+            // },
             submitted: false,
             availableKpis: this.props.availableKpis.map((kpi) => {
                 return { value: kpi.kpi.id, label: kpi.kpi.name }
@@ -77,6 +84,22 @@ class NewModuleForm extends Component {
         e.preventDefault();
 
         const {module} = this.state;
+        if(module.id) {
+            return dashboardService.updateModule(this.props.dashboardId, module)
+                .then((data) => {
+                    if(data.module) {
+                        this.props.displayAlert(alertConstants.SUCCESS, userMessages.NEW_SQUAD_FORM.SUCCESS);
+                        this.props.onNewModule(data.module);
+                        this.close();
+                    }
+                }).catch((err) => {
+                    if(err === 'Conflict') {
+                        this.props.displayAlert(alertConstants.ERROR, userMessages.NEW_SQUAD_FORM.EXISTING);
+                    } else {
+                        this.props.displayAlert(alertConstants.ERROR, userMessages.NEW_SQUAD_FORM.INTERNAL_ERROR);
+                    }
+                });
+        }
         return dashboardService.addModuleToDashboard(this.props.dashboardId, module)
             .then((data) => {
                 if(data.module) {
@@ -143,7 +166,7 @@ class NewModuleForm extends Component {
                                         <Col md={{ size: 4}}>
                                             <FormGroup>
                                                 <Select
-                                                    defaultValue={module.width}
+                                                    defaultValue={widthOption.filter(option => option.value === parseInt(module.width))}
                                                     options={widthOption}
                                                     onChange={(newVal) => {this.handleChange({target: {name: 'width', value: newVal.value}})}}
                                                     styles={singleSelect}
@@ -153,7 +176,7 @@ class NewModuleForm extends Component {
                                         <Col md={{ size: 4}}>
                                             <FormGroup>
                                                 <Select
-                                                    defaultValue={module.properties.kpi}
+                                                    defaultValue={this.state.availableKpis.filter(kpi => kpi.value === module.properties.kpi)}
                                                     options={this.state.availableKpis}
                                                     onChange={(newVal) => {this.handlePropertiesChange({target: {name: 'kpi', value: newVal.value}})}}
                                                     styles={singleSelect}
