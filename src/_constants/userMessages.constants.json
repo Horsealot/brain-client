@@ -25,8 +25,13 @@
     "INTERNAL_ERROR": "Internal error"
   },
   "NEW_OKR_FORM": {
-    "SUCCESS": "Okr has been create",
+    "SUCCESS": "Okr has been created",
     "EXISTING": "OKR is already existing",
+    "INTERNAL_ERROR": "Internal error"
+  },
+  "NEW_DASHBOARD_FORM": {
+    "SUCCESS": "Dashboard has been created",
+    "EXISTING": "Dashboard is already existing",
     "INTERNAL_ERROR": "Internal error"
   },
   "HOW_TO": {

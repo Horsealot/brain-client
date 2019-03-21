@@ -5,6 +5,7 @@ import {userService} from "./user.service";
 export const dashboardService = {
     getMyDashboard,
     getDashboard,
+    createSquadDashboard,
     getAvailableKpis,
     addModuleToDashboard,
     updateModule,
@@ -46,6 +47,20 @@ function addModuleToDashboard(id, module) {
     };
 
     return fetch(`${config.apiUrl}/dashboards/${id}/module`, requestOptions)
+        .then(userService.handleResponse)
+        .then((data) => {
+            return data;
+        });
+}
+
+function createSquadDashboard(name) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), ...squadHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({dashboard: {name, squadId: userService.getActiveSquad().id}})
+    };
+
+    return fetch(`${config.apiUrl}/dashboards`, requestOptions)
         .then(userService.handleResponse)
         .then((data) => {
             return data;
