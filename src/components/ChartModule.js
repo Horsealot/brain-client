@@ -28,6 +28,28 @@ class ChartModule extends Component {
                 }]
             }
         };
+
+        if(module.properties.xAxes && module.properties.xAxes.length > 0) {
+            options.scales.xAxes = [{
+                ticks: {
+                    display: false //this will remove only the label
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: module.properties.xAxes
+                }
+            }]
+        }
+
+        if(module.properties.yAxes && module.properties.yAxes.length > 0) {
+            options.scales.yAxes = [{
+                scaleLabel: {
+                    display: true,
+                    labelString: module.properties.yAxes
+                }
+            }]
+        }
+
         return <Line data={data} options={options} height={150}/>;
     }
 }

@@ -1,39 +1,25 @@
 import React, { Component } from 'react';
 import {Button, Col, Form, FormGroup, Row} from "reactstrap";
-import FloatingLabelInput from "./FloatingLabelInput";
 import {bindActionCreators} from "redux";
 import {displayAlert} from "../actions/alert.actions";
 import connect from "react-redux/es/connect/connect";
 import {alertConstants} from "../_constants/alert.constants";
 import userMessages from './../_constants/userMessages.constants';
 import './../_styles/_components/_new_module_form.scss';
-import {singleSelect} from "../_styles/_select";
-import Select from 'react-select'
 import {dashboardService} from "../_services/dashboard.service";
-
-const widthOption = [
-    { value: 0, label: 'Full width' },
-    { value: 1, label: '1/3' },
-    { value: 2, label: '1/2' }
-];
+import NewChartModuleForm from "./NewChartModuleForm";
+import NewPeriodModuleForm from "./NewPeriodModuleForm";
 
 class NewModuleForm extends Component {
     constructor(props) {
         super(props);
 
         let module = (this.props.editedModule && this.props.editedModule.type) ? this.props.editedModule : {
-            type: null,
-            properties: {}
+            type: null
         };
-        console.log(module);
 
         this.state = {
             module,
-            // module: {
-            //     type: null,
-            //     properties: {}
-            // },
-            submitted: false,
             availableKpis: this.props.availableKpis.map((kpi) => {
                 return { value: kpi.kpi.id, label: kpi.kpi.name }
             })
@@ -43,7 +29,6 @@ class NewModuleForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePropertiesChange = this.handlePropertiesChange.bind(this);
         this.close = this.close.bind(this);
-        // this.selectType = this.selectType.bind(this);
     }
 
     close() {
@@ -54,7 +39,6 @@ class NewModuleForm extends Component {
                 width: null,
                 properties: {}
             },
-            submitted: false
         });
         this.props.close();
     }
@@ -80,10 +64,14 @@ class NewModuleForm extends Component {
         this.setState({ module });
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit(e, module) {
+        if(e) {
+            e.preventDefault();
+        }
 
-        const {module} = this.state;
+        if(!module) {
+            module = this.state.module;
+        }
         if(module.id) {
             return dashboardService.updateModule(this.props.dashboardId, module)
                 .then((data) => {
@@ -117,85 +105,50 @@ class NewModuleForm extends Component {
     }
 
     render() {
-        const { submitted, module } = this.state;
+        const { module } = this.state;
         return (
             <div className='new-module-form__backdrop' onClick={this.close}>
-                <Form className='new-module-form' onSubmit={ this.handleSubmit } onClick={(e) => e.stopPropagation()}>
-                    <Row form>
-                        <Col md={{ size: 12}} className='text-center'>
-                            <FormGroup>
-                                <h5>Add new module</h5>
-                            </FormGroup>
-                        </Col>
-                        {
-                            !module.type &&
-                                (
-                                    <>
-                                        <Col md={{ size: 4}}>
-                                            <FormGroup>
-                                                <Button onClick={() => this.selectType("chart")}>Chart</Button>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={{ size: 4}}>
-                                            <FormGroup>
-                                                <Button onClick={() => this.selectType("period")}>Period</Button>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={{ size: 4}}>
-                                            <FormGroup>
-                                                <Button onClick={() => this.selectType("goal")}>Goal</Button>
-                                            </FormGroup>
-                                        </Col>
-                                    </>
-                                )
-                        }
-                        {
-                            module.type === 'chart' &&
-                                (
-                                    <>
-                                        <Col md={{ size: 4}}>
-                                            <FormGroup>
-                                                <FloatingLabelInput
-                                                    type="text"
-                                                    label="Title"
-                                                    formClass={(submitted && !module.title ? 'has-error' : '')}
-                                                    name="title" value={module.title}
-                                                    onChange={this.handleChange}/>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={{ size: 4}}>
-                                            <FormGroup>
-                                                <Select
-                                                    defaultValue={widthOption.filter(option => option.value === parseInt(module.width))}
-                                                    options={widthOption}
-                                                    onChange={(newVal) => {this.handleChange({target: {name: 'width', value: newVal.value}})}}
-                                                    styles={singleSelect}
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={{ size: 4}}>
-                                            <FormGroup>
-                                                <Select
-                                                    defaultValue={this.state.availableKpis.filter(kpi => kpi.value === module.properties.kpi)}
-                                                    options={this.state.availableKpis}
-                                                    onChange={(newVal) => {this.handlePropertiesChange({target: {name: 'kpi', value: newVal.value}})}}
-                                                    styles={singleSelect}
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                    </>
-                                )
-                        }
-                        {
-                            module.type &&
-                            <Col md={{ size: 3}} className='text-right'>
-                                <FormGroup>
-                                    <Button className="btn">Create</Button>
-                                </FormGroup>
-                            </Col>
-                        }
-                    </Row>
-                </Form>
+                {
+                    module.type === 'chart' &&
+                    (
+                        <NewChartModuleForm module={module} availableKpis={this.state.availableKpis} onSubmit={(module) => {this.handleSubmit(null, module);}}/>
+                    )
+                }
+                {
+                    module.type === 'period' &&
+                    (
+                        <NewPeriodModuleForm module={module} availableKpis={this.state.availableKpis} onSubmit={(module) => {this.handleSubmit(null, module);}}/>
+                    )
+                }
+                {
+                    !module.type &&
+                    (
+                        <Form className='new-module-form' onClick={(e) => e.stopPropagation()}>
+                            <Row form>
+                                <Col md={{ size: 12}} className='text-center'>
+                                    <FormGroup>
+                                        <h5>Add new module</h5>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={{ size: 4}}>
+                                    <FormGroup>
+                                        <Button onClick={() => this.selectType("chart")}>Chart</Button>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={{ size: 4}}>
+                                    <FormGroup>
+                                        <Button onClick={() => this.selectType("period")}>Period</Button>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={{ size: 4}}>
+                                    <FormGroup>
+                                        <Button onClick={() => this.selectType("goal")}>Goal</Button>
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </Form>
+                    )
+                }
             </div>
         );
     }

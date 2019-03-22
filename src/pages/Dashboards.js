@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Col, Container, Form, FormGroup, Row} from "reactstrap";
+import {Button, Container} from "reactstrap";
 import FullPageLoader from "../components/FullPageLoader";
 import DashboardModule from "../components/DashboardModule";
 import NewModuleForm from "../components/NewModuleForm";
@@ -10,7 +10,6 @@ import connect from "react-redux/es/connect/connect";
 import NotFound from "../components/NotFound";
 import {statusConstants} from './../_constants/status.constants';
 import InternalError from "../components/InternalError";
-import FloatingLabelInput from "../components/FloatingLabelInput";
 import NewDashboardForm from "../components/NewDashboardForm";
 
 class Dashboard extends Component {

@@ -58,6 +58,10 @@ export const singleSelect = {
         padding: '0',
         width: '15px'
     }),
+    singleValue: styles => ({
+        ...styles,
+        color: 'white'
+    }),
     input: styles => ({
         ...styles,
     }),
