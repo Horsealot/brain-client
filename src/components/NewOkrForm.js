@@ -122,7 +122,7 @@ class NewOkrForm extends Component {
                                 { okr.picture &&
                                     <Col md={{ size: 12}} className='text-center'>
                                         <FormGroup>
-                                            <img src={okr.picture} onClick={this.triggerFileUpload} className='new-okr-form__picture'/>
+                                            <img src={okr.picture} onClick={this.triggerFileUpload} className='new-okr-form__picture' alt='Our OKR'/>
                                         </FormGroup>
                                     </Col>
                                 }

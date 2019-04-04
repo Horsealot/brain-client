@@ -1,26 +1,26 @@
 @import './../atoms.scss';
 
 .dashboard {
+  padding-top: 40px;
   &-module {
     position: relative;
     margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     float: left;
     width: 100%;
     background: $light-black;
     padding: 20px 10px;
     border-radius: 10px;
-    &:first-child {
-      margin-top: 60px;
-    }
     &.module {
       &-0 {
-        width: 100%;
+        width: calc(100% - 20px);
       }
       &-1 {
-        width: 33.33%;
+        width: calc(33.33% - 20px);
       }
       &-2 {
-        width: 50%;
+        width: calc(50% - 20px);
       }
     }
 
@@ -48,7 +48,9 @@
         }
       }
       &-remove {
-        color: red;
+        i {
+          color: red;
+        }
       }
     }
     &:hover &__moderate {
@@ -57,6 +59,7 @@
     }
   }
   &__new {
+    width: 100%;
     float: left;
     padding: 50px 0;
   }

@@ -4,6 +4,11 @@ import {Line} from "react-chartjs-2";
 class ChartModule extends Component {
     render() {
         const { module } = this.props;
+        if(!module.stats) {
+            return <>
+                No data
+            </>;
+        }
         let data = {
             labels: module.stats.map((stat) => (new Date(stat.date)).toLocaleDateString('fr-FR')),
             datasets: [

@@ -121,7 +121,7 @@ class Dashboard extends Component {
                             }
                             { isAdmin &&
                             <div className='dashboard__new'>
-                                <Button onClick={this.toggleNewModuleForm}>Add new module</Button>
+                                <Button onClick={() => this.toggleNewModuleForm()}>Add new module</Button>
                             </div>
                             }
                         </div>

@@ -39,9 +39,11 @@ class DashboardModule extends Component {
             {this.props.editable &&
                 <div className='dashboard-module__moderate flex flex--center-center'>
                     <div className='dashboard-module__moderate-edit' onClick={this.editModule}>
-                        <i className="fas fa-edit"></i>
+                        <i className="fas fa-pen"></i>
                     </div>
-                    <div className='dashboard-module__moderate-remove' onClick={this.deleteModule}>X</div>
+                    <div className='dashboard-module__moderate-remove' onClick={this.deleteModule}>
+                        <i className="fas fa-times"></i>
+                    </div>
                 </div>
             }
             <h5 className='text-center'>{module.title}</h5>

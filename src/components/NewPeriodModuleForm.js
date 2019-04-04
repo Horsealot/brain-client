@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {Button, Col, Form, FormGroup, Row} from "reactstrap";
 import FloatingLabelInput from "./FloatingLabelInput";
+import ModuleFormButton from "./ModuleFormButton";
 import {singleSelect} from "../_styles/_select";
 import Select from 'react-select'
+import shortid from 'shortid';
 
 import widthOption from './../_constants/chartModuleWidthOptions.constants';
 
@@ -15,6 +17,13 @@ class NewPeriodModuleForm extends Component {
             module.properties = [];
         }
 
+        module.properties.map((property) => {
+            return {
+                ...property,
+                id: shortid.generate()
+            };
+        })
+
         this.state = {
             module,
             submitted: false,
@@ -24,6 +33,7 @@ class NewPeriodModuleForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addKPI = this.addKPI.bind(this);
+        this.removeKPI = this.removeKPI.bind(this);
         this.handlePropertiesChange = this.handlePropertiesChange.bind(this);
         this.close = this.close.bind(this);
     }
@@ -58,9 +68,16 @@ class NewPeriodModuleForm extends Component {
     addKPI() {
         let module = {...this.state.module};
         module.properties.push({
+            id: shortid.generate(),
             kpi: null,
             title: null
         });
+        this.setState({ module });
+    }
+
+    removeKPI(index) {
+        let module = {...this.state.module};
+        module.properties.splice(index, 1);
         this.setState({ module });
     }
 
@@ -106,7 +123,7 @@ class NewPeriodModuleForm extends Component {
                     </Col>
                     {
                         module.properties.map((property, index) =>
-                            <Col key={index} md={{ size: 12}}>
+                            <Col key={property.id} md={{ size: 12}}>
                                 <Row>
                                     <Col md={{ size: 6}}>
                                         <FloatingLabelInput
@@ -117,13 +134,14 @@ class NewPeriodModuleForm extends Component {
                                     </Col>
                                     <Col md={{ size: 6}}>
                                         <FormGroup>
-                                            <label className="floating-form">KPI</label>
                                             <Select
+                                                placeholder={'Select KPI'}
                                                 defaultValue={this.state.availableKpis.filter(kpi => kpi.value === property.kpi)}
                                                 options={this.state.availableKpis}
                                                 onChange={(newVal) => {this.handlePropertiesChange(index, 'kpi', newVal.value)}}
                                                 styles={singleSelect}
                                             />
+                                            <i onClick={() => this.removeKPI(index)} className="new-module-form__period__remove fas fa-times"/>
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -137,7 +155,7 @@ class NewPeriodModuleForm extends Component {
                     </Col>
                     <Col md={{ size: 3}} className='text-right'>
                         <FormGroup>
-                            <Button className="btn">Create</Button>
+                            <ModuleFormButton module={module}/>
                         </FormGroup>
                     </Col>
                 </Row>

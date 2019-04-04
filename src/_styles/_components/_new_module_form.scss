@@ -1,6 +1,9 @@
 @import './../atoms.scss';
 
 .new-module-form {
+  max-height: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   width: 600px;
   max-width: 100%;
   position: absolute;
@@ -12,6 +15,7 @@
   @include box-shadow(0 0 10px $light-black);
   background: $light-black;
   border-radius: 10px;
+
   &__backdrop {
     position: fixed;
     z-index: 50;
@@ -19,5 +23,15 @@
     bottom: 0;
     left: 0;
     right: 0;
+  }
+
+  &__period {
+    &__remove {
+      position: absolute;
+      right: -7px;
+      top: 11px;
+      font-size: 18px;
+      color: red;
+    }
   }
 }

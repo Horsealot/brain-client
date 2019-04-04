@@ -127,7 +127,7 @@ class UserGoals extends Component {
     }
 
     render() {
-        const { loaded, userGoals, newGoal } = this.state;
+        const { loaded, newGoal } = this.state;
         const { user } = this.props.authentication;
         if(!loaded) {
             return (<FullPageLoader />);
